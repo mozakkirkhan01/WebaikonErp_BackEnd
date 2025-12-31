@@ -12,34 +12,20 @@ namespace Project
     using System;
     using System.Collections.Generic;
     
-    public partial class Client
+    public partial class ProjectType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Client()
+        public ProjectType()
         {
             this.ClientPayments = new HashSet<ClientPayment>();
             this.ClientRenewals = new HashSet<ClientRenewal>();
         }
     
-        public int ClientId { get; set; }
-        public string ClientCompanyName { get; set; }
-        public string ContactPersonName { get; set; }
-        public string MobileNo { get; set; }
-        public string AlternateMobileNo { get; set; }
-        public string Email { get; set; }
-        public string GSTNo { get; set; }
-        public string ClientFullAddress { get; set; }
-        public int StateId { get; set; }
-        public Nullable<int> StateCode { get; set; }
+        public int ProjectTypeId { get; set; }
+        public string ProjectTypeName { get; set; }
+        public string ProjectDescription { get; set; }
         public byte Status { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
-        public Nullable<int> UpdatedBy { get; set; }
-        public Nullable<System.DateTime> UpdatedOn { get; set; }
     
-        public virtual StaffLogin StaffLogin { get; set; }
-        public virtual StaffLogin StaffLogin1 { get; set; }
-        public virtual State State { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ClientPayment> ClientPayments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -65,6 +65,12 @@
     <Compile Include="Client.cs">
       <DependentUpon>WebaikonErp.tt</DependentUpon>
     </Compile>
+    <Compile Include="ClientPayment.cs">
+      <DependentUpon>WebaikonErp.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClientRenewal.cs">
+      <DependentUpon>WebaikonErp.tt</DependentUpon>
+    </Compile>
     <Compile Include="Company.cs">
       <DependentUpon>WebaikonErp.tt</DependentUpon>
     </Compile>
@@ -85,6 +91,15 @@
       <DependentUpon>WebaikonErp.tt</DependentUpon>
     </Compile>
     <Compile Include="Enumerator.cs" />
+    <Compile Include="Expense.cs">
+      <DependentUpon>WebaikonErp.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExpenseHead.cs">
+      <DependentUpon>WebaikonErp.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Location.cs">
+      <DependentUpon>WebaikonErp.tt</DependentUpon>
+    </Compile>
     <Compile Include="LoginLog.cs">
       <DependentUpon>WebaikonErp.tt</DependentUpon>
     </Compile>
@@ -96,6 +111,9 @@
       <DependentUpon>WebaikonErp.tt</DependentUpon>
     </Compile>
     <Compile Include="PageGroup.cs">
+      <DependentUpon>WebaikonErp.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProjectType.cs">
       <DependentUpon>WebaikonErp.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

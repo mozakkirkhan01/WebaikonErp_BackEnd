@@ -42,16 +42,48 @@
     <Property Name="MobileNo" Type="nvarchar" MaxLength="13" Nullable="false" />
     <Property Name="AlternateMobileNo" Type="nvarchar" MaxLength="13" />
     <Property Name="Email" Type="nvarchar" MaxLength="50" />
-    <Property Name="GSTNo" Type="nvarchar" MaxLength="15" Nullable="false" />
+    <Property Name="GSTNo" Type="nvarchar" MaxLength="15" />
     <Property Name="ClientFullAddress" Type="nvarchar" MaxLength="350" Nullable="false" />
-    <Property Name="State" Type="nvarchar" MaxLength="50" />
+    <Property Name="StateId" Type="int" Nullable="false" />
     <Property Name="StateCode" Type="int" />
     <Property Name="Status" Type="tinyint" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ClientPayment">
+    <Key>
+      <PropertyRef Name="ClientPaymentId" />
+    </Key>
+    <Property Name="ClientPaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="ProjectTypeId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+    <Property Name="Amount" Type="money" Nullable="false" />
+    <Property Name="PaymentDate" Type="date" Nullable="false" />
+    <Property Name="PaymentMode" Type="tinyint" Nullable="false" />
     <Property Name="CreatedBy" Type="int" Nullable="false" />
     <Property Name="CreatedOn" Type="datetime" Nullable="false" />
     <Property Name="UpdatedBy" Type="int" />
     <Property Name="UpdatedOn" Type="datetime" />
-    <Property Name="LocationId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClientRenewal">
+    <Key>
+      <PropertyRef Name="ClientRenewalId" />
+    </Key>
+    <Property Name="ClientRenewalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="ProjectTypeId" Type="int" Nullable="false" />
+    <Property Name="ProjectName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+    <Property Name="RenewalDate" Type="date" Nullable="false" />
+    <Property Name="RenewalAmount" Type="money" Nullable="false" />
+    <Property Name="RenewalStatus" Type="tinyint" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedOn" Type="datetime" />
   </EntityType>
   <EntityType Name="Company">
     <Key>
@@ -111,6 +143,37 @@
     <Property Name="DistrictName" Type="nvarchar" MaxLength="250" Nullable="false" />
     <Property Name="StateId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Expense">
+    <Key>
+      <PropertyRef Name="ExpenseId" />
+    </Key>
+    <Property Name="ExpenseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExpenseHeadId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+    <Property Name="ExpenseDate" Type="date" Nullable="false" />
+    <Property Name="PaymentMode" Type="tinyint" Nullable="false" />
+    <Property Name="Amount" Type="money" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" Nullable="false" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedBy" Type="int" />
+    <Property Name="UpdatedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="ExpenseHead">
+    <Key>
+      <PropertyRef Name="ExpenseHeadId" />
+    </Key>
+    <Property Name="ExpenseHeadId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ExpenseHeadName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Status" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationId" />
+    </Key>
+    <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocationName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Status" Type="tinyint" Nullable="false" />
+  </EntityType>
   <EntityType Name="LoginLog">
     <Key>
       <PropertyRef Name="LoginLogId" />
@@ -164,6 +227,15 @@
     <Property Name="Status" Type="tinyint" Nullable="false" />
     <Property Name="UpdatedBy" Type="int" />
     <Property Name="UpdatedDate" Type="date" />
+  </EntityType>
+  <EntityType Name="ProjectType">
+    <Key>
+      <PropertyRef Name="ProjectTypeId" />
+    </Key>
+    <Property Name="ProjectTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProjectTypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="ProjectDescription" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="Status" Type="tinyint" Nullable="false" />
   </EntityType>
   <EntityType Name="Role">
     <Key>
@@ -244,7 +316,7 @@
     </Key>
     <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="StateName" Type="nvarchar" MaxLength="255" Nullable="false" />
-    <Property Name="StateCode" Type="money" />
+    <Property Name="StateCode" Type="int" />
     <Property Name="Status" Type="tinyint" Nullable="false" />
     <Property Name="UpdatedBy" Type="int" />
     <Property Name="UpdatedDate" Type="datetime" />
@@ -296,6 +368,138 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Client_StaffLogin">
+    <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffLogin">
+        <PropertyRef Name="StaffLoginId" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Client_StaffLogin1">
+    <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffLogin">
+        <PropertyRef Name="StaffLoginId" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Client_State">
+    <End Role="State" Type="Self.State" Multiplicity="1" />
+    <End Role="Client" Type="Self.Client" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="State">
+        <PropertyRef Name="StateId" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientPayment_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="ClientPayment" Type="Self.ClientPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientId" />
+      </Principal>
+      <Dependent Role="ClientPayment">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientPayment_ProjectType">
+    <End Role="ProjectType" Type="Self.ProjectType" Multiplicity="1" />
+    <End Role="ClientPayment" Type="Self.ClientPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectType">
+        <PropertyRef Name="ProjectTypeId" />
+      </Principal>
+      <Dependent Role="ClientPayment">
+        <PropertyRef Name="ProjectTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientPayment_StaffLogin">
+    <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
+    <End Role="ClientPayment" Type="Self.ClientPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffLogin">
+        <PropertyRef Name="StaffLoginId" />
+      </Principal>
+      <Dependent Role="ClientPayment">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientPayment_StaffLogin1">
+    <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
+    <End Role="ClientPayment" Type="Self.ClientPayment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffLogin">
+        <PropertyRef Name="StaffLoginId" />
+      </Principal>
+      <Dependent Role="ClientPayment">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientRenewal_Client">
+    <End Role="Client" Type="Self.Client" Multiplicity="1" />
+    <End Role="ClientRenewal" Type="Self.ClientRenewal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="ClientId" />
+      </Principal>
+      <Dependent Role="ClientRenewal">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientRenewal_ProjectType">
+    <End Role="ProjectType" Type="Self.ProjectType" Multiplicity="1" />
+    <End Role="ClientRenewal" Type="Self.ClientRenewal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProjectType">
+        <PropertyRef Name="ProjectTypeId" />
+      </Principal>
+      <Dependent Role="ClientRenewal">
+        <PropertyRef Name="ProjectTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientRenewal_StaffLogin">
+    <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
+    <End Role="ClientRenewal" Type="Self.ClientRenewal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffLogin">
+        <PropertyRef Name="StaffLoginId" />
+      </Principal>
+      <Dependent Role="ClientRenewal">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientRenewal_StaffLogin1">
+    <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
+    <End Role="ClientRenewal" Type="Self.ClientRenewal" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffLogin">
+        <PropertyRef Name="StaffLoginId" />
+      </Principal>
+      <Dependent Role="ClientRenewal">
+        <PropertyRef Name="UpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Company_StaffLogin">
     <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
     <End Role="Company" Type="Self.Company" Multiplicity="*" />
@@ -341,6 +545,42 @@
       </Principal>
       <Dependent Role="District">
         <PropertyRef Name="StateId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Expense_ExpenseHead">
+    <End Role="ExpenseHead" Type="Self.ExpenseHead" Multiplicity="1" />
+    <End Role="Expense" Type="Self.Expense" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ExpenseHead">
+        <PropertyRef Name="ExpenseHeadId" />
+      </Principal>
+      <Dependent Role="Expense">
+        <PropertyRef Name="ExpenseHeadId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Expense_StaffLogin">
+    <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
+    <End Role="Expense" Type="Self.Expense" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffLogin">
+        <PropertyRef Name="StaffLoginId" />
+      </Principal>
+      <Dependent Role="Expense">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Expense_StaffLogin1">
+    <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
+    <End Role="Expense" Type="Self.Expense" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffLogin">
+        <PropertyRef Name="StaffLoginId" />
+      </Principal>
+      <Dependent Role="Expense">
+        <PropertyRef Name="UpdatedBy" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -593,15 +833,21 @@
     <EntitySet Name="Backup" EntityType="Self.Backup" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClientPayment" EntityType="Self.ClientPayment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ClientRenewal" EntityType="Self.ClientRenewal" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Database" EntityType="Self.Database" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Expense" EntityType="Self.Expense" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ExpenseHead" EntityType="Self.ExpenseHead" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LoginLog" EntityType="Self.LoginLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PageGroup" EntityType="Self.PageGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectType" EntityType="Self.ProjectType" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="RoleMenu" EntityType="Self.RoleMenu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
@@ -621,6 +867,50 @@
       <End Role="State" EntitySet="State" />
       <End Role="City" EntitySet="City" />
     </AssociationSet>
+    <AssociationSet Name="FK_Client_StaffLogin" Association="Self.FK_Client_StaffLogin">
+      <End Role="StaffLogin" EntitySet="StaffLogin" />
+      <End Role="Client" EntitySet="Client" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Client_StaffLogin1" Association="Self.FK_Client_StaffLogin1">
+      <End Role="StaffLogin" EntitySet="StaffLogin" />
+      <End Role="Client" EntitySet="Client" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Client_State" Association="Self.FK_Client_State">
+      <End Role="State" EntitySet="State" />
+      <End Role="Client" EntitySet="Client" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientPayment_Client" Association="Self.FK_ClientPayment_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="ClientPayment" EntitySet="ClientPayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientPayment_ProjectType" Association="Self.FK_ClientPayment_ProjectType">
+      <End Role="ProjectType" EntitySet="ProjectType" />
+      <End Role="ClientPayment" EntitySet="ClientPayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientPayment_StaffLogin" Association="Self.FK_ClientPayment_StaffLogin">
+      <End Role="StaffLogin" EntitySet="StaffLogin" />
+      <End Role="ClientPayment" EntitySet="ClientPayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientPayment_StaffLogin1" Association="Self.FK_ClientPayment_StaffLogin1">
+      <End Role="StaffLogin" EntitySet="StaffLogin" />
+      <End Role="ClientPayment" EntitySet="ClientPayment" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientRenewal_Client" Association="Self.FK_ClientRenewal_Client">
+      <End Role="Client" EntitySet="Client" />
+      <End Role="ClientRenewal" EntitySet="ClientRenewal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientRenewal_ProjectType" Association="Self.FK_ClientRenewal_ProjectType">
+      <End Role="ProjectType" EntitySet="ProjectType" />
+      <End Role="ClientRenewal" EntitySet="ClientRenewal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientRenewal_StaffLogin" Association="Self.FK_ClientRenewal_StaffLogin">
+      <End Role="StaffLogin" EntitySet="StaffLogin" />
+      <End Role="ClientRenewal" EntitySet="ClientRenewal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientRenewal_StaffLogin1" Association="Self.FK_ClientRenewal_StaffLogin1">
+      <End Role="StaffLogin" EntitySet="StaffLogin" />
+      <End Role="ClientRenewal" EntitySet="ClientRenewal" />
+    </AssociationSet>
     <AssociationSet Name="FK_Company_StaffLogin" Association="Self.FK_Company_StaffLogin">
       <End Role="StaffLogin" EntitySet="StaffLogin" />
       <End Role="Company" EntitySet="Company" />
@@ -636,6 +926,18 @@
     <AssociationSet Name="FK_District_State" Association="Self.FK_District_State">
       <End Role="State" EntitySet="State" />
       <End Role="District" EntitySet="District" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Expense_ExpenseHead" Association="Self.FK_Expense_ExpenseHead">
+      <End Role="ExpenseHead" EntitySet="ExpenseHead" />
+      <End Role="Expense" EntitySet="Expense" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Expense_StaffLogin" Association="Self.FK_Expense_StaffLogin">
+      <End Role="StaffLogin" EntitySet="StaffLogin" />
+      <End Role="Expense" EntitySet="Expense" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Expense_StaffLogin1" Association="Self.FK_Expense_StaffLogin1">
+      <End Role="StaffLogin" EntitySet="StaffLogin" />
+      <End Role="Expense" EntitySet="Expense" />
     </AssociationSet>
     <AssociationSet Name="FK_Menu_Menu" Association="Self.FK_Menu_Menu">
       <End Role="Menu" EntitySet="Menu" />

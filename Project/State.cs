@@ -18,18 +18,21 @@ namespace Project
         public State()
         {
             this.Cities = new HashSet<City>();
+            this.Clients = new HashSet<Client>();
             this.Districts = new HashSet<District>();
         }
     
         public int StateId { get; set; }
         public string StateName { get; set; }
-        public Nullable<decimal> StateCode { get; set; }
+        public Nullable<int> StateCode { get; set; }
         public byte Status { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<City> Cities { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Client> Clients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<District> Districts { get; set; }
         public virtual StaffLogin StaffLogin { get; set; }

@@ -4,54 +4,74 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a8a65b56555441d4b2dd175ab666a126" Name="Diagram1">
-        <EntityTypeShape EntityType="WebaikonErpModel.App" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.Backup" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.City" Width="1.5" PointX="9.75" PointY="28.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.Client" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.Company" Width="1.5" PointX="7.5" PointY="18.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.Database" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.Department" Width="1.5" PointX="0.75" PointY="17.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.Designation" Width="1.5" PointX="0.75" PointY="14.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.District" Width="1.5" PointX="9.75" PointY="38.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.LoginLog" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.Menu" Width="1.5" PointX="10.5" PointY="20.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.Page" Width="1.5" PointX="12.75" PointY="25.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.PageGroup" Width="1.5" PointX="7.5" PointY="31.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.Role" Width="1.5" PointX="7.5" PointY="34.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.RoleMenu" Width="1.5" PointX="12.75" PointY="29.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.Staff" Width="1.5" PointX="3" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.StaffLogin" Width="1.5" PointX="5.25" PointY="19.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.StaffLoginRole" Width="1.5" PointX="9.75" PointY="25" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.State" Width="1.5" PointX="7.5" PointY="38.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebaikonErpModel.StateMaster" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Backup_Staff" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_City_StaffLogin" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_City_State" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Company_StaffLogin" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Database_Staff" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Database_Staff1" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Staff_Department" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Staff_Designation" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_District_State" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Menu_Menu" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Menu_Page" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Menu_StaffLogin" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_RoleMenu_Menu" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Page_PageGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Page_StaffLogin" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_PageGroup_StaffLogin" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Role_StaffLogin" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_RoleMenu_Role" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_StaffLoginRole_StaffLoginRole" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_RoleMenu_StaffLogin" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_Staff_StaffLogin" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_StaffLogin_Staff" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_StaffLogin_StaffLogin" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_StaffLogin_StaffLogin1" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_StaffLoginRole_StaffLogin" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_StaffLoginRole_StaffLogin1" ManuallyRouted="false" />
-        <AssociationConnector Association="WebaikonErpModel.FK_State_StaffLogin" ManuallyRouted="false" />
+      <Diagram DiagramId="a8a65b56555441d4b2dd175ab666a126" Name="Diagram1" ZoomLevel="55">
+        <EntityTypeShape EntityType="WebaikonErpModel.App" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Backup" Width="1.5" PointX="5.25" PointY="15.75" />
+        <EntityTypeShape EntityType="WebaikonErpModel.City" Width="1.5" PointX="9.75" PointY="33.375" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Client" Width="1.5" PointX="12.75" PointY="32.25" />
+        <EntityTypeShape EntityType="WebaikonErpModel.ClientPayment" Width="1.5" PointX="15" PointY="29.75" />
+        <EntityTypeShape EntityType="WebaikonErpModel.ClientRenewal" Width="1.5" PointX="18" PointY="29.625" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Company" Width="1.5" PointX="7.5" PointY="54" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Database" Width="1.5" PointX="5.25" PointY="19.125" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Department" Width="1.5" PointX="0.75" PointY="25.625" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Designation" Width="1.5" PointX="0.75" PointY="22.625" />
+        <EntityTypeShape EntityType="WebaikonErpModel.District" Width="1.5" PointX="9.75" PointY="40.75" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Expense" Width="1.5" PointX="10.5" PointY="28.125" />
+        <EntityTypeShape EntityType="WebaikonErpModel.ExpenseHead" Width="1.5" PointX="8.25" PointY="25" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Location" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="WebaikonErpModel.LoginLog" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Menu" Width="1.5" PointX="7.5" PointY="28" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Page" Width="1.5" PointX="12.75" PointY="39.25" />
+        <EntityTypeShape EntityType="WebaikonErpModel.PageGroup" Width="1.5" PointX="7.5" PointY="50.875" />
+        <EntityTypeShape EntityType="WebaikonErpModel.ProjectType" Width="1.5" PointX="15.75" PointY="26.625" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Role" Width="1.5" PointX="7.5" PointY="47.625" />
+        <EntityTypeShape EntityType="WebaikonErpModel.RoleMenu" Width="1.5" PointX="15.75" PointY="35.625" />
+        <EntityTypeShape EntityType="WebaikonErpModel.Staff" Width="1.5" PointX="3" PointY="23.25" />
+        <EntityTypeShape EntityType="WebaikonErpModel.StaffLogin" Width="1.5" PointX="5.25" PointY="26.25" />
+        <EntityTypeShape EntityType="WebaikonErpModel.StaffLoginRole" Width="1.5" PointX="9.75" PointY="36.875" />
+        <EntityTypeShape EntityType="WebaikonErpModel.State" Width="1.5" PointX="7.5" PointY="40.25" />
+        <EntityTypeShape EntityType="WebaikonErpModel.StateMaster" Width="1.5" PointX="2.75" PointY="3.75" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Backup_Staff" />
+        <AssociationConnector Association="WebaikonErpModel.FK_City_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_City_State" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Client_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Client_StaffLogin1" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Client_State" />
+        <AssociationConnector Association="WebaikonErpModel.FK_ClientPayment_Client" />
+        <AssociationConnector Association="WebaikonErpModel.FK_ClientRenewal_Client" />
+        <AssociationConnector Association="WebaikonErpModel.FK_ClientPayment_ProjectType" />
+        <AssociationConnector Association="WebaikonErpModel.FK_ClientPayment_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_ClientPayment_StaffLogin1" />
+        <AssociationConnector Association="WebaikonErpModel.FK_ClientRenewal_ProjectType" />
+        <AssociationConnector Association="WebaikonErpModel.FK_ClientRenewal_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_ClientRenewal_StaffLogin1" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Company_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Database_Staff" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Database_Staff1" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Staff_Department" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Staff_Designation" />
+        <AssociationConnector Association="WebaikonErpModel.FK_District_State" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Expense_ExpenseHead" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Expense_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Expense_StaffLogin1" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Menu_Menu" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Menu_Page" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Menu_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_RoleMenu_Menu" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Page_PageGroup" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Page_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_PageGroup_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Role_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_RoleMenu_Role" />
+        <AssociationConnector Association="WebaikonErpModel.FK_StaffLoginRole_StaffLoginRole" />
+        <AssociationConnector Association="WebaikonErpModel.FK_RoleMenu_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_Staff_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_StaffLogin_Staff" />
+        <AssociationConnector Association="WebaikonErpModel.FK_StaffLogin_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_StaffLogin_StaffLogin1" />
+        <AssociationConnector Association="WebaikonErpModel.FK_StaffLoginRole_StaffLogin" />
+        <AssociationConnector Association="WebaikonErpModel.FK_StaffLoginRole_StaffLogin1" />
+        <AssociationConnector Association="WebaikonErpModel.FK_State_StaffLogin" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

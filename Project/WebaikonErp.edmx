@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WebaikonErpModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="WebaikonErpModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="App">
           <Key>
             <PropertyRef Name="AppId" />
@@ -47,16 +47,48 @@
           <Property Name="MobileNo" Type="nvarchar" MaxLength="13" Nullable="false" />
           <Property Name="AlternateMobileNo" Type="nvarchar" MaxLength="13" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
-          <Property Name="GSTNo" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="GSTNo" Type="nvarchar" MaxLength="15" />
           <Property Name="ClientFullAddress" Type="nvarchar" MaxLength="350" Nullable="false" />
-          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateId" Type="int" Nullable="false" />
           <Property Name="StateCode" Type="int" />
           <Property Name="Status" Type="tinyint" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ClientPayment">
+          <Key>
+            <PropertyRef Name="ClientPaymentId" />
+          </Key>
+          <Property Name="ClientPaymentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="ProjectTypeId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="PaymentDate" Type="date" Nullable="false" />
+          <Property Name="PaymentMode" Type="tinyint" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedOn" Type="datetime" />
-          <Property Name="LocationId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClientRenewal">
+          <Key>
+            <PropertyRef Name="ClientRenewalId" />
+          </Key>
+          <Property Name="ClientRenewalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="ProjectTypeId" Type="int" Nullable="false" />
+          <Property Name="ProjectName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="RenewalDate" Type="date" Nullable="false" />
+          <Property Name="RenewalAmount" Type="money" Nullable="false" />
+          <Property Name="RenewalStatus" Type="tinyint" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedOn" Type="datetime" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
@@ -116,6 +148,37 @@
           <Property Name="DistrictName" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="StateId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Expense">
+          <Key>
+            <PropertyRef Name="ExpenseId" />
+          </Key>
+          <Property Name="ExpenseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExpenseHeadId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="ExpenseDate" Type="date" Nullable="false" />
+          <Property Name="PaymentMode" Type="tinyint" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="UpdatedBy" Type="int" />
+          <Property Name="UpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ExpenseHead">
+          <Key>
+            <PropertyRef Name="ExpenseHeadId" />
+          </Key>
+          <Property Name="ExpenseHeadId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExpenseHeadName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocationName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
+        </EntityType>
         <EntityType Name="LoginLog">
           <Key>
             <PropertyRef Name="LoginLogId" />
@@ -169,6 +232,15 @@
           <Property Name="Status" Type="tinyint" Nullable="false" />
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="ProjectType">
+          <Key>
+            <PropertyRef Name="ProjectTypeId" />
+          </Key>
+          <Property Name="ProjectTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProjectTypeName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProjectDescription" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Status" Type="tinyint" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -249,7 +321,7 @@
           </Key>
           <Property Name="StateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StateName" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="StateCode" Type="money" />
+          <Property Name="StateCode" Type="int" />
           <Property Name="Status" Type="tinyint" Nullable="false" />
           <Property Name="UpdatedBy" Type="int" />
           <Property Name="UpdatedDate" Type="datetime" />
@@ -301,6 +373,138 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Client_StaffLogin">
+          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_StaffLogin1">
+          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_State">
+          <End Role="State" Type="Self.State" Multiplicity="1" />
+          <End Role="Client" Type="Self.Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientPayment_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientPayment" Type="Self.ClientPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="ClientPayment">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientPayment_ProjectType">
+          <End Role="ProjectType" Type="Self.ProjectType" Multiplicity="1" />
+          <End Role="ClientPayment" Type="Self.ClientPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectType">
+              <PropertyRef Name="ProjectTypeId" />
+            </Principal>
+            <Dependent Role="ClientPayment">
+              <PropertyRef Name="ProjectTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientPayment_StaffLogin">
+          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
+          <End Role="ClientPayment" Type="Self.ClientPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="ClientPayment">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientPayment_StaffLogin1">
+          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
+          <End Role="ClientPayment" Type="Self.ClientPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="ClientPayment">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientRenewal_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="ClientRenewal" Type="Self.ClientRenewal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="ClientRenewal">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientRenewal_ProjectType">
+          <End Role="ProjectType" Type="Self.ProjectType" Multiplicity="1" />
+          <End Role="ClientRenewal" Type="Self.ClientRenewal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectType">
+              <PropertyRef Name="ProjectTypeId" />
+            </Principal>
+            <Dependent Role="ClientRenewal">
+              <PropertyRef Name="ProjectTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientRenewal_StaffLogin">
+          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
+          <End Role="ClientRenewal" Type="Self.ClientRenewal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="ClientRenewal">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientRenewal_StaffLogin1">
+          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
+          <End Role="ClientRenewal" Type="Self.ClientRenewal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="ClientRenewal">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Company_StaffLogin">
           <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
           <End Role="Company" Type="Self.Company" Multiplicity="*" />
@@ -346,6 +550,42 @@
             </Principal>
             <Dependent Role="District">
               <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expense_ExpenseHead">
+          <End Role="ExpenseHead" Type="Self.ExpenseHead" Multiplicity="1" />
+          <End Role="Expense" Type="Self.Expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpenseHead">
+              <PropertyRef Name="ExpenseHeadId" />
+            </Principal>
+            <Dependent Role="Expense">
+              <PropertyRef Name="ExpenseHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expense_StaffLogin">
+          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
+          <End Role="Expense" Type="Self.Expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Expense">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expense_StaffLogin1">
+          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
+          <End Role="Expense" Type="Self.Expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Expense">
+              <PropertyRef Name="UpdatedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -598,15 +838,21 @@
           <EntitySet Name="Backup" EntityType="Self.Backup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientPayment" EntityType="Self.ClientPayment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientRenewal" EntityType="Self.ClientRenewal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Database" EntityType="Self.Database" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Designation" EntityType="Self.Designation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="District" EntityType="Self.District" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expense" EntityType="Self.Expense" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExpenseHead" EntityType="Self.ExpenseHead" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LoginLog" EntityType="Self.LoginLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Menu" EntityType="Self.Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Page" EntityType="Self.Page" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PageGroup" EntityType="Self.PageGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectType" EntityType="Self.ProjectType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RoleMenu" EntityType="Self.RoleMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
@@ -626,6 +872,50 @@
             <End Role="State" EntitySet="State" />
             <End Role="City" EntitySet="City" />
           </AssociationSet>
+          <AssociationSet Name="FK_Client_StaffLogin" Association="Self.FK_Client_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogin" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_StaffLogin1" Association="Self.FK_Client_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogin" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_State" Association="Self.FK_Client_State">
+            <End Role="State" EntitySet="State" />
+            <End Role="Client" EntitySet="Client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientPayment_Client" Association="Self.FK_ClientPayment_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ClientPayment" EntitySet="ClientPayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientPayment_ProjectType" Association="Self.FK_ClientPayment_ProjectType">
+            <End Role="ProjectType" EntitySet="ProjectType" />
+            <End Role="ClientPayment" EntitySet="ClientPayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientPayment_StaffLogin" Association="Self.FK_ClientPayment_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogin" />
+            <End Role="ClientPayment" EntitySet="ClientPayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientPayment_StaffLogin1" Association="Self.FK_ClientPayment_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogin" />
+            <End Role="ClientPayment" EntitySet="ClientPayment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientRenewal_Client" Association="Self.FK_ClientRenewal_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="ClientRenewal" EntitySet="ClientRenewal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientRenewal_ProjectType" Association="Self.FK_ClientRenewal_ProjectType">
+            <End Role="ProjectType" EntitySet="ProjectType" />
+            <End Role="ClientRenewal" EntitySet="ClientRenewal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientRenewal_StaffLogin" Association="Self.FK_ClientRenewal_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogin" />
+            <End Role="ClientRenewal" EntitySet="ClientRenewal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientRenewal_StaffLogin1" Association="Self.FK_ClientRenewal_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogin" />
+            <End Role="ClientRenewal" EntitySet="ClientRenewal" />
+          </AssociationSet>
           <AssociationSet Name="FK_Company_StaffLogin" Association="Self.FK_Company_StaffLogin">
             <End Role="StaffLogin" EntitySet="StaffLogin" />
             <End Role="Company" EntitySet="Company" />
@@ -641,6 +931,18 @@
           <AssociationSet Name="FK_District_State" Association="Self.FK_District_State">
             <End Role="State" EntitySet="State" />
             <End Role="District" EntitySet="District" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expense_ExpenseHead" Association="Self.FK_Expense_ExpenseHead">
+            <End Role="ExpenseHead" EntitySet="ExpenseHead" />
+            <End Role="Expense" EntitySet="Expense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expense_StaffLogin" Association="Self.FK_Expense_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogin" />
+            <End Role="Expense" EntitySet="Expense" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expense_StaffLogin1" Association="Self.FK_Expense_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogin" />
+            <End Role="Expense" EntitySet="Expense" />
           </AssociationSet>
           <AssociationSet Name="FK_Menu_Menu" Association="Self.FK_Menu_Menu">
             <End Role="Menu" EntitySet="Menu" />
@@ -723,11 +1025,202 @@
             <End Role="State" EntitySet="State" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WebaikonErpModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="WebaikonErpEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Apps" EntityType="WebaikonErpModel.App" />
+          <EntitySet Name="Backups" EntityType="WebaikonErpModel.Backup" />
+          <EntitySet Name="Cities" EntityType="WebaikonErpModel.City" />
+          <EntitySet Name="Clients" EntityType="WebaikonErpModel.Client" />
+          <EntitySet Name="ClientPayments" EntityType="WebaikonErpModel.ClientPayment" />
+          <EntitySet Name="ClientRenewals" EntityType="WebaikonErpModel.ClientRenewal" />
+          <EntitySet Name="Companies" EntityType="WebaikonErpModel.Company" />
+          <EntitySet Name="Databases" EntityType="WebaikonErpModel.Database" />
+          <EntitySet Name="Departments" EntityType="WebaikonErpModel.Department" />
+          <EntitySet Name="Designations" EntityType="WebaikonErpModel.Designation" />
+          <EntitySet Name="Districts" EntityType="WebaikonErpModel.District" />
+          <EntitySet Name="Expenses" EntityType="WebaikonErpModel.Expense" />
+          <EntitySet Name="ExpenseHeads" EntityType="WebaikonErpModel.ExpenseHead" />
+          <EntitySet Name="Locations" EntityType="WebaikonErpModel.Location" />
+          <EntitySet Name="LoginLogs" EntityType="WebaikonErpModel.LoginLog" />
+          <EntitySet Name="Menus" EntityType="WebaikonErpModel.Menu" />
+          <EntitySet Name="Pages" EntityType="WebaikonErpModel.Page" />
+          <EntitySet Name="PageGroups" EntityType="WebaikonErpModel.PageGroup" />
+          <EntitySet Name="ProjectTypes" EntityType="WebaikonErpModel.ProjectType" />
+          <EntitySet Name="Roles" EntityType="WebaikonErpModel.Role" />
+          <EntitySet Name="RoleMenus" EntityType="WebaikonErpModel.RoleMenu" />
+          <EntitySet Name="Staffs" EntityType="WebaikonErpModel.Staff" />
+          <EntitySet Name="StaffLogins" EntityType="WebaikonErpModel.StaffLogin" />
+          <EntitySet Name="StaffLoginRoles" EntityType="WebaikonErpModel.StaffLoginRole" />
+          <EntitySet Name="States" EntityType="WebaikonErpModel.State" />
+          <EntitySet Name="StateMasters" EntityType="WebaikonErpModel.StateMaster" />
+          <AssociationSet Name="FK_Backup_Staff" Association="WebaikonErpModel.FK_Backup_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Backup" EntitySet="Backups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_City_StaffLogin" Association="WebaikonErpModel.FK_City_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_City_State" Association="WebaikonErpModel.FK_City_State">
+            <End Role="State" EntitySet="States" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_StaffLogin" Association="WebaikonErpModel.FK_Client_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_StaffLogin1" Association="WebaikonErpModel.FK_Client_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Client_State" Association="WebaikonErpModel.FK_Client_State">
+            <End Role="State" EntitySet="States" />
+            <End Role="Client" EntitySet="Clients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientPayment_Client" Association="WebaikonErpModel.FK_ClientPayment_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="ClientPayment" EntitySet="ClientPayments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientRenewal_Client" Association="WebaikonErpModel.FK_ClientRenewal_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="ClientRenewal" EntitySet="ClientRenewals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientPayment_ProjectType" Association="WebaikonErpModel.FK_ClientPayment_ProjectType">
+            <End Role="ProjectType" EntitySet="ProjectTypes" />
+            <End Role="ClientPayment" EntitySet="ClientPayments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientPayment_StaffLogin" Association="WebaikonErpModel.FK_ClientPayment_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="ClientPayment" EntitySet="ClientPayments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientPayment_StaffLogin1" Association="WebaikonErpModel.FK_ClientPayment_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="ClientPayment" EntitySet="ClientPayments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientRenewal_ProjectType" Association="WebaikonErpModel.FK_ClientRenewal_ProjectType">
+            <End Role="ProjectType" EntitySet="ProjectTypes" />
+            <End Role="ClientRenewal" EntitySet="ClientRenewals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientRenewal_StaffLogin" Association="WebaikonErpModel.FK_ClientRenewal_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="ClientRenewal" EntitySet="ClientRenewals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientRenewal_StaffLogin1" Association="WebaikonErpModel.FK_ClientRenewal_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="ClientRenewal" EntitySet="ClientRenewals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Company_StaffLogin" Association="WebaikonErpModel.FK_Company_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Company" EntitySet="Companies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Database_Staff" Association="WebaikonErpModel.FK_Database_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Database" EntitySet="Databases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Database_Staff1" Association="WebaikonErpModel.FK_Database_Staff1">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="Database" EntitySet="Databases" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Department" Association="WebaikonErpModel.FK_Staff_Department">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Designation" Association="WebaikonErpModel.FK_Staff_Designation">
+            <End Role="Designation" EntitySet="Designations" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_District_State" Association="WebaikonErpModel.FK_District_State">
+            <End Role="State" EntitySet="States" />
+            <End Role="District" EntitySet="Districts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expense_ExpenseHead" Association="WebaikonErpModel.FK_Expense_ExpenseHead">
+            <End Role="ExpenseHead" EntitySet="ExpenseHeads" />
+            <End Role="Expense" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expense_StaffLogin" Association="WebaikonErpModel.FK_Expense_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Expense" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expense_StaffLogin1" Association="WebaikonErpModel.FK_Expense_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Expense" EntitySet="Expenses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menu_Menu" Association="WebaikonErpModel.FK_Menu_Menu">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="Menu1" EntitySet="Menus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menu_Page" Association="WebaikonErpModel.FK_Menu_Page">
+            <End Role="Page" EntitySet="Pages" />
+            <End Role="Menu" EntitySet="Menus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Menu_StaffLogin" Association="WebaikonErpModel.FK_Menu_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Menu" EntitySet="Menus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleMenu_Menu" Association="WebaikonErpModel.FK_RoleMenu_Menu">
+            <End Role="Menu" EntitySet="Menus" />
+            <End Role="RoleMenu" EntitySet="RoleMenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Page_PageGroup" Association="WebaikonErpModel.FK_Page_PageGroup">
+            <End Role="PageGroup" EntitySet="PageGroups" />
+            <End Role="Page" EntitySet="Pages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Page_StaffLogin" Association="WebaikonErpModel.FK_Page_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Page" EntitySet="Pages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PageGroup_StaffLogin" Association="WebaikonErpModel.FK_PageGroup_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="PageGroup" EntitySet="PageGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Role_StaffLogin" Association="WebaikonErpModel.FK_Role_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleMenu_Role" Association="WebaikonErpModel.FK_RoleMenu_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="RoleMenu" EntitySet="RoleMenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffLoginRole_StaffLoginRole" Association="WebaikonErpModel.FK_StaffLoginRole_StaffLoginRole">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="StaffLoginRole" EntitySet="StaffLoginRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleMenu_StaffLogin" Association="WebaikonErpModel.FK_RoleMenu_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="RoleMenu" EntitySet="RoleMenus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_StaffLogin" Association="WebaikonErpModel.FK_Staff_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffLogin_Staff" Association="WebaikonErpModel.FK_StaffLogin_Staff">
+            <End Role="Staff" EntitySet="Staffs" />
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffLogin_StaffLogin" Association="WebaikonErpModel.FK_StaffLogin_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="StaffLogin1" EntitySet="StaffLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffLogin_StaffLogin1" Association="WebaikonErpModel.FK_StaffLogin_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="StaffLogin1" EntitySet="StaffLogins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffLoginRole_StaffLogin" Association="WebaikonErpModel.FK_StaffLoginRole_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="StaffLoginRole" EntitySet="StaffLoginRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StaffLoginRole_StaffLogin1" Association="WebaikonErpModel.FK_StaffLoginRole_StaffLogin1">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="StaffLoginRole" EntitySet="StaffLoginRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_State_StaffLogin" Association="WebaikonErpModel.FK_State_StaffLogin">
+            <End Role="StaffLogin" EntitySet="StaffLogins" />
+            <End Role="State" EntitySet="States" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="App">
           <Key>
             <PropertyRef Name="AppId" />
@@ -748,7 +1241,7 @@
           <Property Name="BackupStatus" Type="Byte" Nullable="false" />
           <Property Name="ErrorMessage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="BackupDatabase" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Staff" Relationship="Self.FK_Backup_Staff" FromRole="Backup" ToRole="Staff" />
+          <NavigationProperty Name="Staff" Relationship="WebaikonErpModel.FK_Backup_Staff" FromRole="Backup" ToRole="Staff" />
         </EntityType>
         <EntityType Name="City">
           <Key>
@@ -756,33 +1249,78 @@
           </Key>
           <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StateId" Type="Int32" Nullable="false" />
-          <Property Name="CityName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CityName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="StaffLogin" Relationship="Self.FK_City_StaffLogin" FromRole="City" ToRole="StaffLogin" />
-          <NavigationProperty Name="State" Relationship="Self.FK_City_State" FromRole="City" ToRole="State" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_City_StaffLogin" FromRole="City" ToRole="StaffLogin" />
+          <NavigationProperty Name="State" Relationship="WebaikonErpModel.FK_City_State" FromRole="City" ToRole="State" />
         </EntityType>
         <EntityType Name="Client">
           <Key>
             <PropertyRef Name="ClientId" />
           </Key>
           <Property Name="ClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ClientCompanyName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ContactPersonName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MobileNo" Type="String" MaxLength="13" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClientCompanyName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPersonName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="13" FixedLength="false" Unicode="true" />
           <Property Name="AlternateMobileNo" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GSTNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ClientFullAddress" Type="String" MaxLength="350" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GSTNo" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="ClientFullAddress" Type="String" Nullable="false" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="Int32" Nullable="false" />
           <Property Name="StateCode" Type="Int32" />
           <Property Name="Status" Type="Byte" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_Client_StaffLogin" FromRole="Client" ToRole="StaffLogin" />
+          <NavigationProperty Name="StaffLogin1" Relationship="WebaikonErpModel.FK_Client_StaffLogin1" FromRole="Client" ToRole="StaffLogin" />
+          <NavigationProperty Name="State" Relationship="WebaikonErpModel.FK_Client_State" FromRole="Client" ToRole="State" />
+          <NavigationProperty Name="ClientPayments" Relationship="WebaikonErpModel.FK_ClientPayment_Client" FromRole="Client" ToRole="ClientPayment" />
+          <NavigationProperty Name="ClientRenewals" Relationship="WebaikonErpModel.FK_ClientRenewal_Client" FromRole="Client" ToRole="ClientRenewal" />
+        </EntityType>
+        <EntityType Name="ClientPayment">
+          <Key>
+            <PropertyRef Name="ClientPaymentId" />
+          </Key>
+          <Property Name="ClientPaymentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectTypeId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PaymentMode" Type="Byte" Nullable="false" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <Property Name="LocationId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="WebaikonErpModel.FK_ClientPayment_Client" FromRole="ClientPayment" ToRole="Client" />
+          <NavigationProperty Name="ProjectType" Relationship="WebaikonErpModel.FK_ClientPayment_ProjectType" FromRole="ClientPayment" ToRole="ProjectType" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_ClientPayment_StaffLogin" FromRole="ClientPayment" ToRole="StaffLogin" />
+          <NavigationProperty Name="StaffLogin1" Relationship="WebaikonErpModel.FK_ClientPayment_StaffLogin1" FromRole="ClientPayment" ToRole="StaffLogin" />
+        </EntityType>
+        <EntityType Name="ClientRenewal">
+          <Key>
+            <PropertyRef Name="ClientRenewalId" />
+          </Key>
+          <Property Name="ClientRenewalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectTypeId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RenewalDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="RenewalAmount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="RenewalStatus" Type="Byte" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Client" Relationship="WebaikonErpModel.FK_ClientRenewal_Client" FromRole="ClientRenewal" ToRole="Client" />
+          <NavigationProperty Name="ProjectType" Relationship="WebaikonErpModel.FK_ClientRenewal_ProjectType" FromRole="ClientRenewal" ToRole="ProjectType" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_ClientRenewal_StaffLogin" FromRole="ClientRenewal" ToRole="StaffLogin" />
+          <NavigationProperty Name="StaffLogin1" Relationship="WebaikonErpModel.FK_ClientRenewal_StaffLogin1" FromRole="ClientRenewal" ToRole="StaffLogin" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
@@ -805,60 +1343,95 @@
           <Property Name="Status" Type="Byte" Nullable="false" />
           <Property Name="UpdatedBy" Type="Int32" Nullable="false" />
           <Property Name="UpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="StaffLogin" Relationship="Self.FK_Company_StaffLogin" FromRole="Company" ToRole="StaffLogin" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_Company_StaffLogin" FromRole="Company" ToRole="StaffLogin" />
         </EntityType>
         <EntityType Name="Database">
           <Key>
             <PropertyRef Name="DatabaseId" />
           </Key>
           <Property Name="DatabaseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DatabaseName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DatabaseName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Staff" Relationship="Self.FK_Database_Staff" FromRole="Database" ToRole="Staff" />
-          <NavigationProperty Name="Staff1" Relationship="Self.FK_Database_Staff1" FromRole="Database" ToRole="Staff" />
+          <NavigationProperty Name="Staff" Relationship="WebaikonErpModel.FK_Database_Staff" FromRole="Database" ToRole="Staff" />
+          <NavigationProperty Name="Staff1" Relationship="WebaikonErpModel.FK_Database_Staff1" FromRole="Database" ToRole="Staff" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentId" />
           </Key>
           <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DepartmentName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_Department" FromRole="Department" ToRole="Staff" />
+          <NavigationProperty Name="Staffs" Relationship="WebaikonErpModel.FK_Staff_Department" FromRole="Department" ToRole="Staff" />
         </EntityType>
         <EntityType Name="Designation">
           <Key>
             <PropertyRef Name="DesignationId" />
           </Key>
           <Property Name="DesignationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DesignationName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DesignationName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_Designation" FromRole="Designation" ToRole="Staff" />
+          <NavigationProperty Name="Staffs" Relationship="WebaikonErpModel.FK_Staff_Designation" FromRole="Designation" ToRole="Staff" />
         </EntityType>
         <EntityType Name="District">
           <Key>
             <PropertyRef Name="DistrictId" />
           </Key>
           <Property Name="DistrictId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DistrictName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DistrictName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="StateId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="State" Relationship="Self.FK_District_State" FromRole="District" ToRole="State" />
+          <NavigationProperty Name="State" Relationship="WebaikonErpModel.FK_District_State" FromRole="District" ToRole="State" />
+        </EntityType>
+        <EntityType Name="Expense">
+          <Key>
+            <PropertyRef Name="ExpenseId" />
+          </Key>
+          <Property Name="ExpenseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExpenseHeadId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PaymentMode" Type="Byte" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedBy" Type="Int32" />
+          <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ExpenseHead" Relationship="WebaikonErpModel.FK_Expense_ExpenseHead" FromRole="Expense" ToRole="ExpenseHead" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_Expense_StaffLogin" FromRole="Expense" ToRole="StaffLogin" />
+          <NavigationProperty Name="StaffLogin1" Relationship="WebaikonErpModel.FK_Expense_StaffLogin1" FromRole="Expense" ToRole="StaffLogin" />
+        </EntityType>
+        <EntityType Name="ExpenseHead">
+          <Key>
+            <PropertyRef Name="ExpenseHeadId" />
+          </Key>
+          <Property Name="ExpenseHeadId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExpenseHeadName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Expenses" Relationship="WebaikonErpModel.FK_Expense_ExpenseHead" FromRole="ExpenseHead" ToRole="Expense" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationId" />
+          </Key>
+          <Property Name="LocationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocationName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
         </EntityType>
         <EntityType Name="LoginLog">
           <Key>
             <PropertyRef Name="LoginLogId" />
           </Key>
           <Property Name="LoginLogId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoginPassword" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ClientBrowser" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoginDevice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="IPAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ReferrerUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LoginPassword" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ClientBrowser" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LoginDevice" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IPAddress" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ReferrerUrl" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="LoginResult" Type="Byte" Nullable="false" />
           <Property Name="LoginTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
@@ -871,7 +1444,7 @@
             <PropertyRef Name="MenuId" />
           </Key>
           <Property Name="MenuId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MenuTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MenuTitle" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="PageId" Type="Int32" />
           <Property Name="MenuNo" Type="Int32" Nullable="false" />
           <Property Name="ParentMenuId" Type="Int32" />
@@ -879,11 +1452,11 @@
           <Property Name="Status" Type="Byte" Nullable="false" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Menu1" Relationship="Self.FK_Menu_Menu" FromRole="Menu" ToRole="Menu1" />
-          <NavigationProperty Name="Menu2" Relationship="Self.FK_Menu_Menu" FromRole="Menu1" ToRole="Menu" />
-          <NavigationProperty Name="Page" Relationship="Self.FK_Menu_Page" FromRole="Menu" ToRole="Page" />
-          <NavigationProperty Name="StaffLogin" Relationship="Self.FK_Menu_StaffLogin" FromRole="Menu" ToRole="StaffLogin" />
-          <NavigationProperty Name="RoleMenus" Relationship="Self.FK_RoleMenu_Menu" FromRole="Menu" ToRole="RoleMenu" />
+          <NavigationProperty Name="Menu1" Relationship="WebaikonErpModel.FK_Menu_Menu" FromRole="Menu" ToRole="Menu1" />
+          <NavigationProperty Name="Menu2" Relationship="WebaikonErpModel.FK_Menu_Menu" FromRole="Menu1" ToRole="Menu" />
+          <NavigationProperty Name="Page" Relationship="WebaikonErpModel.FK_Menu_Page" FromRole="Menu" ToRole="Page" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_Menu_StaffLogin" FromRole="Menu" ToRole="StaffLogin" />
+          <NavigationProperty Name="RoleMenus" Relationship="WebaikonErpModel.FK_RoleMenu_Menu" FromRole="Menu" ToRole="RoleMenu" />
         </EntityType>
         <EntityType Name="Page">
           <Key>
@@ -891,39 +1464,50 @@
           </Key>
           <Property Name="PageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PageGroupId" Type="Int32" Nullable="false" />
-          <Property Name="PageName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PageUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PageName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PageUrl" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Menus" Relationship="Self.FK_Menu_Page" FromRole="Page" ToRole="Menu" />
-          <NavigationProperty Name="PageGroup" Relationship="Self.FK_Page_PageGroup" FromRole="Page" ToRole="PageGroup" />
-          <NavigationProperty Name="StaffLogin" Relationship="Self.FK_Page_StaffLogin" FromRole="Page" ToRole="StaffLogin" />
+          <NavigationProperty Name="Menus" Relationship="WebaikonErpModel.FK_Menu_Page" FromRole="Page" ToRole="Menu" />
+          <NavigationProperty Name="PageGroup" Relationship="WebaikonErpModel.FK_Page_PageGroup" FromRole="Page" ToRole="PageGroup" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_Page_StaffLogin" FromRole="Page" ToRole="StaffLogin" />
         </EntityType>
         <EntityType Name="PageGroup">
           <Key>
             <PropertyRef Name="PageGroupId" />
           </Key>
           <Property Name="PageGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PageGroupName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PageGroupName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Pages" Relationship="Self.FK_Page_PageGroup" FromRole="PageGroup" ToRole="Page" />
-          <NavigationProperty Name="StaffLogin" Relationship="Self.FK_PageGroup_StaffLogin" FromRole="PageGroup" ToRole="StaffLogin" />
+          <NavigationProperty Name="Pages" Relationship="WebaikonErpModel.FK_Page_PageGroup" FromRole="PageGroup" ToRole="Page" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_PageGroup_StaffLogin" FromRole="PageGroup" ToRole="StaffLogin" />
+        </EntityType>
+        <EntityType Name="ProjectType">
+          <Key>
+            <PropertyRef Name="ProjectTypeId" />
+          </Key>
+          <Property Name="ProjectTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProjectTypeName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProjectDescription" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="ClientPayments" Relationship="WebaikonErpModel.FK_ClientPayment_ProjectType" FromRole="ProjectType" ToRole="ClientPayment" />
+          <NavigationProperty Name="ClientRenewals" Relationship="WebaikonErpModel.FK_ClientRenewal_ProjectType" FromRole="ProjectType" ToRole="ClientRenewal" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleId" />
           </Key>
           <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleTitle" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleTitle" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Status" Type="Byte" Nullable="false" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="StaffLogin" Relationship="Self.FK_Role_StaffLogin" FromRole="Role" ToRole="StaffLogin" />
-          <NavigationProperty Name="RoleMenus" Relationship="Self.FK_RoleMenu_Role" FromRole="Role" ToRole="RoleMenu" />
-          <NavigationProperty Name="StaffLoginRoles" Relationship="Self.FK_StaffLoginRole_StaffLoginRole" FromRole="Role" ToRole="StaffLoginRole" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_Role_StaffLogin" FromRole="Role" ToRole="StaffLogin" />
+          <NavigationProperty Name="RoleMenus" Relationship="WebaikonErpModel.FK_RoleMenu_Role" FromRole="Role" ToRole="RoleMenu" />
+          <NavigationProperty Name="StaffLoginRoles" Relationship="WebaikonErpModel.FK_StaffLoginRole_StaffLoginRole" FromRole="Role" ToRole="StaffLoginRole" />
         </EntityType>
         <EntityType Name="RoleMenu">
           <Key>
@@ -937,21 +1521,21 @@
           <Property Name="CanEdit" Type="Boolean" Nullable="false" />
           <Property Name="CanDelete" Type="Boolean" Nullable="false" />
           <Property Name="CanCreate" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Menu" Relationship="Self.FK_RoleMenu_Menu" FromRole="RoleMenu" ToRole="Menu" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_RoleMenu_Role" FromRole="RoleMenu" ToRole="Role" />
-          <NavigationProperty Name="StaffLogin" Relationship="Self.FK_RoleMenu_StaffLogin" FromRole="RoleMenu" ToRole="StaffLogin" />
+          <NavigationProperty Name="Menu" Relationship="WebaikonErpModel.FK_RoleMenu_Menu" FromRole="RoleMenu" ToRole="Menu" />
+          <NavigationProperty Name="Role" Relationship="WebaikonErpModel.FK_RoleMenu_Role" FromRole="RoleMenu" ToRole="Role" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_RoleMenu_StaffLogin" FromRole="RoleMenu" ToRole="StaffLogin" />
         </EntityType>
         <EntityType Name="Staff">
           <Key>
             <PropertyRef Name="StaffId" />
           </Key>
           <Property Name="StaffId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StaffName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StaffCode" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StaffName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="StaffCode" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="DesignationId" Type="Int32" Nullable="false" />
           <Property Name="StaffType" Type="Byte" Nullable="false" />
           <Property Name="FatherName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="MobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MobileNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="AlternateNo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="Byte" />
@@ -966,13 +1550,13 @@
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="DOB" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Backups" Relationship="Self.FK_Backup_Staff" FromRole="Staff" ToRole="Backup" />
-          <NavigationProperty Name="Databases" Relationship="Self.FK_Database_Staff" FromRole="Staff" ToRole="Database" />
-          <NavigationProperty Name="Databases1" Relationship="Self.FK_Database_Staff1" FromRole="Staff" ToRole="Database" />
-          <NavigationProperty Name="Department" Relationship="Self.FK_Staff_Department" FromRole="Staff" ToRole="Department" />
-          <NavigationProperty Name="Designation" Relationship="Self.FK_Staff_Designation" FromRole="Staff" ToRole="Designation" />
-          <NavigationProperty Name="StaffLogin" Relationship="Self.FK_Staff_StaffLogin" FromRole="Staff" ToRole="StaffLogin" />
-          <NavigationProperty Name="StaffLogins" Relationship="Self.FK_StaffLogin_Staff" FromRole="Staff" ToRole="StaffLogin" />
+          <NavigationProperty Name="Backups" Relationship="WebaikonErpModel.FK_Backup_Staff" FromRole="Staff" ToRole="Backup" />
+          <NavigationProperty Name="Databases" Relationship="WebaikonErpModel.FK_Database_Staff" FromRole="Staff" ToRole="Database" />
+          <NavigationProperty Name="Databases1" Relationship="WebaikonErpModel.FK_Database_Staff1" FromRole="Staff" ToRole="Database" />
+          <NavigationProperty Name="Department" Relationship="WebaikonErpModel.FK_Staff_Department" FromRole="Staff" ToRole="Department" />
+          <NavigationProperty Name="Designation" Relationship="WebaikonErpModel.FK_Staff_Designation" FromRole="Staff" ToRole="Designation" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_Staff_StaffLogin" FromRole="Staff" ToRole="StaffLogin" />
+          <NavigationProperty Name="StaffLogins" Relationship="WebaikonErpModel.FK_StaffLogin_Staff" FromRole="Staff" ToRole="StaffLogin" />
         </EntityType>
         <EntityType Name="StaffLogin">
           <Key>
@@ -980,29 +1564,37 @@
           </Key>
           <Property Name="StaffLoginId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StaffId" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LoginPassword" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LoginPassword" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="Status" Type="Byte" Nullable="false" />
-          <NavigationProperty Name="Cities" Relationship="Self.FK_City_StaffLogin" FromRole="StaffLogin" ToRole="City" />
-          <NavigationProperty Name="Companies" Relationship="Self.FK_Company_StaffLogin" FromRole="StaffLogin" ToRole="Company" />
-          <NavigationProperty Name="Menus" Relationship="Self.FK_Menu_StaffLogin" FromRole="StaffLogin" ToRole="Menu" />
-          <NavigationProperty Name="Pages" Relationship="Self.FK_Page_StaffLogin" FromRole="StaffLogin" ToRole="Page" />
-          <NavigationProperty Name="PageGroups" Relationship="Self.FK_PageGroup_StaffLogin" FromRole="StaffLogin" ToRole="PageGroup" />
-          <NavigationProperty Name="Roles" Relationship="Self.FK_Role_StaffLogin" FromRole="StaffLogin" ToRole="Role" />
-          <NavigationProperty Name="RoleMenus" Relationship="Self.FK_RoleMenu_StaffLogin" FromRole="StaffLogin" ToRole="RoleMenu" />
-          <NavigationProperty Name="Staffs" Relationship="Self.FK_Staff_StaffLogin" FromRole="StaffLogin" ToRole="Staff" />
-          <NavigationProperty Name="Staff" Relationship="Self.FK_StaffLogin_Staff" FromRole="StaffLogin" ToRole="Staff" />
-          <NavigationProperty Name="StaffLogin1" Relationship="Self.FK_StaffLogin_StaffLogin" FromRole="StaffLogin" ToRole="StaffLogin1" />
-          <NavigationProperty Name="StaffLogin2" Relationship="Self.FK_StaffLogin_StaffLogin" FromRole="StaffLogin1" ToRole="StaffLogin" />
-          <NavigationProperty Name="StaffLogin11" Relationship="Self.FK_StaffLogin_StaffLogin1" FromRole="StaffLogin" ToRole="StaffLogin1" />
-          <NavigationProperty Name="StaffLogin3" Relationship="Self.FK_StaffLogin_StaffLogin1" FromRole="StaffLogin1" ToRole="StaffLogin" />
-          <NavigationProperty Name="StaffLoginRoles" Relationship="Self.FK_StaffLoginRole_StaffLogin" FromRole="StaffLogin" ToRole="StaffLoginRole" />
-          <NavigationProperty Name="StaffLoginRoles1" Relationship="Self.FK_StaffLoginRole_StaffLogin1" FromRole="StaffLogin" ToRole="StaffLoginRole" />
-          <NavigationProperty Name="States" Relationship="Self.FK_State_StaffLogin" FromRole="StaffLogin" ToRole="State" />
+          <NavigationProperty Name="Cities" Relationship="WebaikonErpModel.FK_City_StaffLogin" FromRole="StaffLogin" ToRole="City" />
+          <NavigationProperty Name="Clients" Relationship="WebaikonErpModel.FK_Client_StaffLogin" FromRole="StaffLogin" ToRole="Client" />
+          <NavigationProperty Name="Clients1" Relationship="WebaikonErpModel.FK_Client_StaffLogin1" FromRole="StaffLogin" ToRole="Client" />
+          <NavigationProperty Name="ClientPayments" Relationship="WebaikonErpModel.FK_ClientPayment_StaffLogin" FromRole="StaffLogin" ToRole="ClientPayment" />
+          <NavigationProperty Name="ClientPayments1" Relationship="WebaikonErpModel.FK_ClientPayment_StaffLogin1" FromRole="StaffLogin" ToRole="ClientPayment" />
+          <NavigationProperty Name="ClientRenewals" Relationship="WebaikonErpModel.FK_ClientRenewal_StaffLogin" FromRole="StaffLogin" ToRole="ClientRenewal" />
+          <NavigationProperty Name="ClientRenewals1" Relationship="WebaikonErpModel.FK_ClientRenewal_StaffLogin1" FromRole="StaffLogin" ToRole="ClientRenewal" />
+          <NavigationProperty Name="Companies" Relationship="WebaikonErpModel.FK_Company_StaffLogin" FromRole="StaffLogin" ToRole="Company" />
+          <NavigationProperty Name="Expenses" Relationship="WebaikonErpModel.FK_Expense_StaffLogin" FromRole="StaffLogin" ToRole="Expense" />
+          <NavigationProperty Name="Expenses1" Relationship="WebaikonErpModel.FK_Expense_StaffLogin1" FromRole="StaffLogin" ToRole="Expense" />
+          <NavigationProperty Name="Menus" Relationship="WebaikonErpModel.FK_Menu_StaffLogin" FromRole="StaffLogin" ToRole="Menu" />
+          <NavigationProperty Name="Pages" Relationship="WebaikonErpModel.FK_Page_StaffLogin" FromRole="StaffLogin" ToRole="Page" />
+          <NavigationProperty Name="PageGroups" Relationship="WebaikonErpModel.FK_PageGroup_StaffLogin" FromRole="StaffLogin" ToRole="PageGroup" />
+          <NavigationProperty Name="Roles" Relationship="WebaikonErpModel.FK_Role_StaffLogin" FromRole="StaffLogin" ToRole="Role" />
+          <NavigationProperty Name="RoleMenus" Relationship="WebaikonErpModel.FK_RoleMenu_StaffLogin" FromRole="StaffLogin" ToRole="RoleMenu" />
+          <NavigationProperty Name="Staffs" Relationship="WebaikonErpModel.FK_Staff_StaffLogin" FromRole="StaffLogin" ToRole="Staff" />
+          <NavigationProperty Name="Staff" Relationship="WebaikonErpModel.FK_StaffLogin_Staff" FromRole="StaffLogin" ToRole="Staff" />
+          <NavigationProperty Name="StaffLogin1" Relationship="WebaikonErpModel.FK_StaffLogin_StaffLogin" FromRole="StaffLogin" ToRole="StaffLogin1" />
+          <NavigationProperty Name="StaffLogin2" Relationship="WebaikonErpModel.FK_StaffLogin_StaffLogin" FromRole="StaffLogin1" ToRole="StaffLogin" />
+          <NavigationProperty Name="StaffLogin11" Relationship="WebaikonErpModel.FK_StaffLogin_StaffLogin1" FromRole="StaffLogin" ToRole="StaffLogin1" />
+          <NavigationProperty Name="StaffLogin3" Relationship="WebaikonErpModel.FK_StaffLogin_StaffLogin1" FromRole="StaffLogin1" ToRole="StaffLogin" />
+          <NavigationProperty Name="StaffLoginRoles" Relationship="WebaikonErpModel.FK_StaffLoginRole_StaffLogin" FromRole="StaffLogin" ToRole="StaffLoginRole" />
+          <NavigationProperty Name="StaffLoginRoles1" Relationship="WebaikonErpModel.FK_StaffLoginRole_StaffLogin1" FromRole="StaffLogin" ToRole="StaffLoginRole" />
+          <NavigationProperty Name="States" Relationship="WebaikonErpModel.FK_State_StaffLogin" FromRole="StaffLogin" ToRole="State" />
         </EntityType>
         <EntityType Name="StaffLoginRole">
           <Key>
@@ -1013,38 +1605,39 @@
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_StaffLoginRole_StaffLoginRole" FromRole="StaffLoginRole" ToRole="Role" />
-          <NavigationProperty Name="StaffLogin" Relationship="Self.FK_StaffLoginRole_StaffLogin" FromRole="StaffLoginRole" ToRole="StaffLogin" />
-          <NavigationProperty Name="StaffLogin1" Relationship="Self.FK_StaffLoginRole_StaffLogin1" FromRole="StaffLoginRole" ToRole="StaffLogin" />
+          <NavigationProperty Name="Role" Relationship="WebaikonErpModel.FK_StaffLoginRole_StaffLoginRole" FromRole="StaffLoginRole" ToRole="Role" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_StaffLoginRole_StaffLogin" FromRole="StaffLoginRole" ToRole="StaffLogin" />
+          <NavigationProperty Name="StaffLogin1" Relationship="WebaikonErpModel.FK_StaffLoginRole_StaffLogin1" FromRole="StaffLoginRole" ToRole="StaffLogin" />
         </EntityType>
         <EntityType Name="State">
           <Key>
             <PropertyRef Name="StateId" />
           </Key>
           <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StateName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="StateCode" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="StateCode" Type="Int32" />
           <Property Name="Status" Type="Byte" Nullable="false" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Cities" Relationship="Self.FK_City_State" FromRole="State" ToRole="City" />
-          <NavigationProperty Name="Districts" Relationship="Self.FK_District_State" FromRole="State" ToRole="District" />
-          <NavigationProperty Name="StaffLogin" Relationship="Self.FK_State_StaffLogin" FromRole="State" ToRole="StaffLogin" />
+          <NavigationProperty Name="Cities" Relationship="WebaikonErpModel.FK_City_State" FromRole="State" ToRole="City" />
+          <NavigationProperty Name="Clients" Relationship="WebaikonErpModel.FK_Client_State" FromRole="State" ToRole="Client" />
+          <NavigationProperty Name="Districts" Relationship="WebaikonErpModel.FK_District_State" FromRole="State" ToRole="District" />
+          <NavigationProperty Name="StaffLogin" Relationship="WebaikonErpModel.FK_State_StaffLogin" FromRole="State" ToRole="StaffLogin" />
         </EntityType>
         <EntityType Name="StateMaster">
           <Key>
             <PropertyRef Name="StateId" />
           </Key>
           <Property Name="StateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StateName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StateName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="StateCode" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Status" Type="Byte" Nullable="false" />
           <Property Name="UpdatedBy" Type="Int32" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_Backup_Staff">
-          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
-          <End Role="Backup" Type="Self.Backup" Multiplicity="*" />
+          <End Type="WebaikonErpModel.Staff" Role="Staff" Multiplicity="1" />
+          <End Type="WebaikonErpModel.Backup" Role="Backup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Staff">
               <PropertyRef Name="StaffId" />
@@ -1055,8 +1648,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_City_StaffLogin">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
-          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.City" Role="City" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1067,8 +1660,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_City_State">
-          <End Role="State" Type="Self.State" Multiplicity="1" />
-          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <End Type="WebaikonErpModel.State" Role="State" Multiplicity="1" />
+          <End Type="WebaikonErpModel.City" Role="City" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="State">
               <PropertyRef Name="StateId" />
@@ -1078,9 +1671,141 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Client_StaffLogin">
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.Client" Role="Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_StaffLogin1">
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.Client" Role="Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Client_State">
+          <End Type="WebaikonErpModel.State" Role="State" Multiplicity="1" />
+          <End Type="WebaikonErpModel.Client" Role="Client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="StateId" />
+            </Principal>
+            <Dependent Role="Client">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientPayment_Client">
+          <End Type="WebaikonErpModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="WebaikonErpModel.ClientPayment" Role="ClientPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="ClientPayment">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientRenewal_Client">
+          <End Type="WebaikonErpModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="WebaikonErpModel.ClientRenewal" Role="ClientRenewal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ClientId" />
+            </Principal>
+            <Dependent Role="ClientRenewal">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientPayment_ProjectType">
+          <End Type="WebaikonErpModel.ProjectType" Role="ProjectType" Multiplicity="1" />
+          <End Type="WebaikonErpModel.ClientPayment" Role="ClientPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectType">
+              <PropertyRef Name="ProjectTypeId" />
+            </Principal>
+            <Dependent Role="ClientPayment">
+              <PropertyRef Name="ProjectTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientPayment_StaffLogin">
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="1" />
+          <End Type="WebaikonErpModel.ClientPayment" Role="ClientPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="ClientPayment">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientPayment_StaffLogin1">
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.ClientPayment" Role="ClientPayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="ClientPayment">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientRenewal_ProjectType">
+          <End Type="WebaikonErpModel.ProjectType" Role="ProjectType" Multiplicity="1" />
+          <End Type="WebaikonErpModel.ClientRenewal" Role="ClientRenewal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectType">
+              <PropertyRef Name="ProjectTypeId" />
+            </Principal>
+            <Dependent Role="ClientRenewal">
+              <PropertyRef Name="ProjectTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientRenewal_StaffLogin">
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="1" />
+          <End Type="WebaikonErpModel.ClientRenewal" Role="ClientRenewal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="ClientRenewal">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientRenewal_StaffLogin1">
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.ClientRenewal" Role="ClientRenewal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="ClientRenewal">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Company_StaffLogin">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
-          <End Role="Company" Type="Self.Company" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="1" />
+          <End Type="WebaikonErpModel.Company" Role="Company" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1091,8 +1816,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Database_Staff">
-          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
-          <End Role="Database" Type="Self.Database" Multiplicity="*" />
+          <End Type="WebaikonErpModel.Staff" Role="Staff" Multiplicity="1" />
+          <End Type="WebaikonErpModel.Database" Role="Database" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Staff">
               <PropertyRef Name="StaffId" />
@@ -1103,8 +1828,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Database_Staff1">
-          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
-          <End Role="Database" Type="Self.Database" Multiplicity="*" />
+          <End Type="WebaikonErpModel.Staff" Role="Staff" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.Database" Role="Database" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Staff">
               <PropertyRef Name="StaffId" />
@@ -1115,8 +1840,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Staff_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="1" />
-          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <End Type="WebaikonErpModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="WebaikonErpModel.Staff" Role="Staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
               <PropertyRef Name="DepartmentId" />
@@ -1127,8 +1852,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Staff_Designation">
-          <End Role="Designation" Type="Self.Designation" Multiplicity="1" />
-          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <End Type="WebaikonErpModel.Designation" Role="Designation" Multiplicity="1" />
+          <End Type="WebaikonErpModel.Staff" Role="Staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Designation">
               <PropertyRef Name="DesignationId" />
@@ -1139,8 +1864,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_District_State">
-          <End Role="State" Type="Self.State" Multiplicity="1" />
-          <End Role="District" Type="Self.District" Multiplicity="*" />
+          <End Type="WebaikonErpModel.State" Role="State" Multiplicity="1" />
+          <End Type="WebaikonErpModel.District" Role="District" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="State">
               <PropertyRef Name="StateId" />
@@ -1150,9 +1875,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Expense_ExpenseHead">
+          <End Type="WebaikonErpModel.ExpenseHead" Role="ExpenseHead" Multiplicity="1" />
+          <End Type="WebaikonErpModel.Expense" Role="Expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExpenseHead">
+              <PropertyRef Name="ExpenseHeadId" />
+            </Principal>
+            <Dependent Role="Expense">
+              <PropertyRef Name="ExpenseHeadId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expense_StaffLogin">
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="1" />
+          <End Type="WebaikonErpModel.Expense" Role="Expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Expense">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expense_StaffLogin1">
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.Expense" Role="Expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StaffLogin">
+              <PropertyRef Name="StaffLoginId" />
+            </Principal>
+            <Dependent Role="Expense">
+              <PropertyRef Name="UpdatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Menu_Menu">
-          <End Role="Menu" Type="Self.Menu" Multiplicity="0..1" />
-          <End Role="Menu1" Type="Self.Menu" Multiplicity="*" />
+          <End Type="WebaikonErpModel.Menu" Role="Menu" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.Menu" Role="Menu1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Menu">
               <PropertyRef Name="MenuId" />
@@ -1163,8 +1924,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Menu_Page">
-          <End Role="Page" Type="Self.Page" Multiplicity="0..1" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <End Type="WebaikonErpModel.Page" Role="Page" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.Menu" Role="Menu" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Page">
               <PropertyRef Name="PageId" />
@@ -1175,8 +1936,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Menu_StaffLogin">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
-          <End Role="Menu" Type="Self.Menu" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.Menu" Role="Menu" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1187,10 +1948,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RoleMenu_Menu">
-          <End Role="Menu" Type="Self.Menu" Multiplicity="1">
+          <End Type="WebaikonErpModel.Menu" Role="Menu" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="RoleMenu" Type="Self.RoleMenu" Multiplicity="*" />
+          <End Type="WebaikonErpModel.RoleMenu" Role="RoleMenu" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Menu">
               <PropertyRef Name="MenuId" />
@@ -1201,10 +1962,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Page_PageGroup">
-          <End Role="PageGroup" Type="Self.PageGroup" Multiplicity="1">
+          <End Type="WebaikonErpModel.PageGroup" Role="PageGroup" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="Page" Type="Self.Page" Multiplicity="*" />
+          <End Type="WebaikonErpModel.Page" Role="Page" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PageGroup">
               <PropertyRef Name="PageGroupId" />
@@ -1215,8 +1976,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Page_StaffLogin">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
-          <End Role="Page" Type="Self.Page" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.Page" Role="Page" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1227,8 +1988,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PageGroup_StaffLogin">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
-          <End Role="PageGroup" Type="Self.PageGroup" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.PageGroup" Role="PageGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1239,8 +2000,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Role_StaffLogin">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
-          <End Role="Role" Type="Self.Role" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.Role" Role="Role" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1251,8 +2012,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RoleMenu_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="RoleMenu" Type="Self.RoleMenu" Multiplicity="*" />
+          <End Type="WebaikonErpModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="WebaikonErpModel.RoleMenu" Role="RoleMenu" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="RoleId" />
@@ -1263,8 +2024,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StaffLoginRole_StaffLoginRole">
-          <End Role="Role" Type="Self.Role" Multiplicity="1" />
-          <End Role="StaffLoginRole" Type="Self.StaffLoginRole" Multiplicity="*" />
+          <End Type="WebaikonErpModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="WebaikonErpModel.StaffLoginRole" Role="StaffLoginRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="RoleId" />
@@ -1275,8 +2036,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RoleMenu_StaffLogin">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
-          <End Role="RoleMenu" Type="Self.RoleMenu" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.RoleMenu" Role="RoleMenu" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1287,8 +2048,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Staff_StaffLogin">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
-          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.Staff" Role="Staff" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1299,8 +2060,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StaffLogin_Staff">
-          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="*" />
+          <End Type="WebaikonErpModel.Staff" Role="Staff" Multiplicity="1" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Staff">
               <PropertyRef Name="StaffId" />
@@ -1311,8 +2072,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StaffLogin_StaffLogin">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
-          <End Role="StaffLogin1" Type="Self.StaffLogin" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1323,8 +2084,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StaffLogin_StaffLogin1">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
-          <End Role="StaffLogin1" Type="Self.StaffLogin" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1335,8 +2096,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StaffLoginRole_StaffLogin">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
-          <End Role="StaffLoginRole" Type="Self.StaffLoginRole" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="1" />
+          <End Type="WebaikonErpModel.StaffLoginRole" Role="StaffLoginRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1347,8 +2108,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_StaffLoginRole_StaffLogin1">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
-          <End Role="StaffLoginRole" Type="Self.StaffLoginRole" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.StaffLoginRole" Role="StaffLoginRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1359,8 +2120,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_State_StaffLogin">
-          <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
-          <End Role="State" Type="Self.State" Multiplicity="*" />
+          <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
+          <End Type="WebaikonErpModel.State" Role="State" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="StaffLogin">
               <PropertyRef Name="StaffLoginId" />
@@ -1370,137 +2131,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="WebaikonErpEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Apps" EntityType="Self.App" />
-          <EntitySet Name="Backups" EntityType="Self.Backup" />
-          <EntitySet Name="Cities" EntityType="Self.City" />
-          <EntitySet Name="Clients" EntityType="Self.Client" />
-          <EntitySet Name="Companies" EntityType="Self.Company" />
-          <EntitySet Name="Databases" EntityType="Self.Database" />
-          <EntitySet Name="Departments" EntityType="Self.Department" />
-          <EntitySet Name="Designations" EntityType="Self.Designation" />
-          <EntitySet Name="Districts" EntityType="Self.District" />
-          <EntitySet Name="LoginLogs" EntityType="Self.LoginLog" />
-          <EntitySet Name="Menus" EntityType="Self.Menu" />
-          <EntitySet Name="Pages" EntityType="Self.Page" />
-          <EntitySet Name="PageGroups" EntityType="Self.PageGroup" />
-          <EntitySet Name="Roles" EntityType="Self.Role" />
-          <EntitySet Name="RoleMenus" EntityType="Self.RoleMenu" />
-          <EntitySet Name="Staffs" EntityType="Self.Staff" />
-          <EntitySet Name="StaffLogins" EntityType="Self.StaffLogin" />
-          <EntitySet Name="StaffLoginRoles" EntityType="Self.StaffLoginRole" />
-          <EntitySet Name="States" EntityType="Self.State" />
-          <EntitySet Name="StateMasters" EntityType="Self.StateMaster" />
-          <AssociationSet Name="FK_Backup_Staff" Association="Self.FK_Backup_Staff">
-            <End Role="Staff" EntitySet="Staffs" />
-            <End Role="Backup" EntitySet="Backups" />
-          </AssociationSet>
-          <AssociationSet Name="FK_City_StaffLogin" Association="Self.FK_City_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="City" EntitySet="Cities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_City_State" Association="Self.FK_City_State">
-            <End Role="State" EntitySet="States" />
-            <End Role="City" EntitySet="Cities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Company_StaffLogin" Association="Self.FK_Company_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="Company" EntitySet="Companies" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Database_Staff" Association="Self.FK_Database_Staff">
-            <End Role="Staff" EntitySet="Staffs" />
-            <End Role="Database" EntitySet="Databases" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Database_Staff1" Association="Self.FK_Database_Staff1">
-            <End Role="Staff" EntitySet="Staffs" />
-            <End Role="Database" EntitySet="Databases" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Staff_Department" Association="Self.FK_Staff_Department">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="Staff" EntitySet="Staffs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Staff_Designation" Association="Self.FK_Staff_Designation">
-            <End Role="Designation" EntitySet="Designations" />
-            <End Role="Staff" EntitySet="Staffs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_District_State" Association="Self.FK_District_State">
-            <End Role="State" EntitySet="States" />
-            <End Role="District" EntitySet="Districts" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Menu_Menu" Association="Self.FK_Menu_Menu">
-            <End Role="Menu" EntitySet="Menus" />
-            <End Role="Menu1" EntitySet="Menus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Menu_Page" Association="Self.FK_Menu_Page">
-            <End Role="Page" EntitySet="Pages" />
-            <End Role="Menu" EntitySet="Menus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Menu_StaffLogin" Association="Self.FK_Menu_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="Menu" EntitySet="Menus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RoleMenu_Menu" Association="Self.FK_RoleMenu_Menu">
-            <End Role="Menu" EntitySet="Menus" />
-            <End Role="RoleMenu" EntitySet="RoleMenus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Page_PageGroup" Association="Self.FK_Page_PageGroup">
-            <End Role="PageGroup" EntitySet="PageGroups" />
-            <End Role="Page" EntitySet="Pages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Page_StaffLogin" Association="Self.FK_Page_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="Page" EntitySet="Pages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PageGroup_StaffLogin" Association="Self.FK_PageGroup_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="PageGroup" EntitySet="PageGroups" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Role_StaffLogin" Association="Self.FK_Role_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="Role" EntitySet="Roles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RoleMenu_Role" Association="Self.FK_RoleMenu_Role">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="RoleMenu" EntitySet="RoleMenus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StaffLoginRole_StaffLoginRole" Association="Self.FK_StaffLoginRole_StaffLoginRole">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="StaffLoginRole" EntitySet="StaffLoginRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RoleMenu_StaffLogin" Association="Self.FK_RoleMenu_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="RoleMenu" EntitySet="RoleMenus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Staff_StaffLogin" Association="Self.FK_Staff_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="Staff" EntitySet="Staffs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StaffLogin_Staff" Association="Self.FK_StaffLogin_Staff">
-            <End Role="Staff" EntitySet="Staffs" />
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StaffLogin_StaffLogin" Association="Self.FK_StaffLogin_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="StaffLogin1" EntitySet="StaffLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StaffLogin_StaffLogin1" Association="Self.FK_StaffLogin_StaffLogin1">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="StaffLogin1" EntitySet="StaffLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StaffLoginRole_StaffLogin" Association="Self.FK_StaffLoginRole_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="StaffLoginRole" EntitySet="StaffLoginRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_StaffLoginRole_StaffLogin1" Association="Self.FK_StaffLoginRole_StaffLogin1">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="StaffLoginRole" EntitySet="StaffLoginRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_State_StaffLogin" Association="Self.FK_State_StaffLogin">
-            <End Role="StaffLogin" EntitySet="StaffLogins" />
-            <End Role="State" EntitySet="States" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1509,280 +2140,358 @@
           <EntitySetMapping Name="Apps">
             <EntityTypeMapping TypeName="WebaikonErpModel.App">
               <MappingFragment StoreEntitySet="App">
-                <ScalarProperty Name="AppId" ColumnName="AppId" />
-                <ScalarProperty Name="AppKey" ColumnName="AppKey" />
-                <ScalarProperty Name="KeyFor" ColumnName="KeyFor" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="KeyFor" ColumnName="KeyFor" />
+                <ScalarProperty Name="AppKey" ColumnName="AppKey" />
+                <ScalarProperty Name="AppId" ColumnName="AppId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Backups">
             <EntityTypeMapping TypeName="WebaikonErpModel.Backup">
               <MappingFragment StoreEntitySet="Backup">
-                <ScalarProperty Name="BackupId" ColumnName="BackupId" />
-                <ScalarProperty Name="BackupFile" ColumnName="BackupFile" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="BackupStatus" ColumnName="BackupStatus" />
-                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
                 <ScalarProperty Name="BackupDatabase" ColumnName="BackupDatabase" />
+                <ScalarProperty Name="ErrorMessage" ColumnName="ErrorMessage" />
+                <ScalarProperty Name="BackupStatus" ColumnName="BackupStatus" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="BackupFile" ColumnName="BackupFile" />
+                <ScalarProperty Name="BackupId" ColumnName="BackupId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Cities">
             <EntityTypeMapping TypeName="WebaikonErpModel.City">
               <MappingFragment StoreEntitySet="City">
-                <ScalarProperty Name="CityId" ColumnName="CityId" />
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Clients">
             <EntityTypeMapping TypeName="WebaikonErpModel.Client">
               <MappingFragment StoreEntitySet="Client">
-                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-                <ScalarProperty Name="ClientCompanyName" ColumnName="ClientCompanyName" />
-                <ScalarProperty Name="ContactPersonName" ColumnName="ContactPersonName" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="AlternateMobileNo" ColumnName="AlternateMobileNo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
-                <ScalarProperty Name="ClientFullAddress" ColumnName="ClientFullAddress" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
-                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="ClientFullAddress" ColumnName="ClientFullAddress" />
+                <ScalarProperty Name="GSTNo" ColumnName="GSTNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AlternateMobileNo" ColumnName="AlternateMobileNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="ContactPersonName" ColumnName="ContactPersonName" />
+                <ScalarProperty Name="ClientCompanyName" ColumnName="ClientCompanyName" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientPayments">
+            <EntityTypeMapping TypeName="WebaikonErpModel.ClientPayment">
+              <MappingFragment StoreEntitySet="ClientPayment">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ProjectTypeId" ColumnName="ProjectTypeId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ClientPaymentId" ColumnName="ClientPaymentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientRenewals">
+            <EntityTypeMapping TypeName="WebaikonErpModel.ClientRenewal">
+              <MappingFragment StoreEntitySet="ClientRenewal">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RenewalStatus" ColumnName="RenewalStatus" />
+                <ScalarProperty Name="RenewalAmount" ColumnName="RenewalAmount" />
+                <ScalarProperty Name="RenewalDate" ColumnName="RenewalDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ProjectName" ColumnName="ProjectName" />
+                <ScalarProperty Name="ProjectTypeId" ColumnName="ProjectTypeId" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="ClientRenewalId" ColumnName="ClientRenewalId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Companies">
             <EntityTypeMapping TypeName="WebaikonErpModel.Company">
               <MappingFragment StoreEntitySet="Company">
-                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
-                <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
-                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
-                <ScalarProperty Name="StateName" ColumnName="StateName" />
-                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="AlternateNo" ColumnName="AlternateNo" />
-                <ScalarProperty Name="Website" ColumnName="Website" />
-                <ScalarProperty Name="LogoPNG" ColumnName="LogoPNG" />
-                <ScalarProperty Name="Logo" ColumnName="Logo" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="LogoPNG" ColumnName="LogoPNG" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="AlternateNo" ColumnName="AlternateNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Databases">
             <EntityTypeMapping TypeName="WebaikonErpModel.Database">
               <MappingFragment StoreEntitySet="Database">
-                <ScalarProperty Name="DatabaseId" ColumnName="DatabaseId" />
-                <ScalarProperty Name="DatabaseName" ColumnName="DatabaseName" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DatabaseName" ColumnName="DatabaseName" />
+                <ScalarProperty Name="DatabaseId" ColumnName="DatabaseId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="WebaikonErpModel.Department">
               <MappingFragment StoreEntitySet="Department">
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Designations">
             <EntityTypeMapping TypeName="WebaikonErpModel.Designation">
               <MappingFragment StoreEntitySet="Designation">
-                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
-                <ScalarProperty Name="DesignationName" ColumnName="DesignationName" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DesignationName" ColumnName="DesignationName" />
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Districts">
             <EntityTypeMapping TypeName="WebaikonErpModel.District">
               <MappingFragment StoreEntitySet="District">
-                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
-                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
                 <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="DistrictName" ColumnName="DistrictName" />
+                <ScalarProperty Name="DistrictId" ColumnName="DistrictId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expenses">
+            <EntityTypeMapping TypeName="WebaikonErpModel.Expense">
+              <MappingFragment StoreEntitySet="Expense">
+                <ScalarProperty Name="UpdatedOn" ColumnName="UpdatedOn" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="ExpenseDate" ColumnName="ExpenseDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ExpenseHeadId" ColumnName="ExpenseHeadId" />
+                <ScalarProperty Name="ExpenseId" ColumnName="ExpenseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExpenseHeads">
+            <EntityTypeMapping TypeName="WebaikonErpModel.ExpenseHead">
+              <MappingFragment StoreEntitySet="ExpenseHead">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ExpenseHeadName" ColumnName="ExpenseHeadName" />
+                <ScalarProperty Name="ExpenseHeadId" ColumnName="ExpenseHeadId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locations">
+            <EntityTypeMapping TypeName="WebaikonErpModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="LocationId" ColumnName="LocationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LoginLogs">
             <EntityTypeMapping TypeName="WebaikonErpModel.LoginLog">
               <MappingFragment StoreEntitySet="LoginLog">
-                <ScalarProperty Name="LoginLogId" ColumnName="LoginLogId" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="LoginPassword" ColumnName="LoginPassword" />
-                <ScalarProperty Name="ClientBrowser" ColumnName="ClientBrowser" />
-                <ScalarProperty Name="LoginDevice" ColumnName="LoginDevice" />
-                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
-                <ScalarProperty Name="ReferrerUrl" ColumnName="ReferrerUrl" />
-                <ScalarProperty Name="LoginResult" ColumnName="LoginResult" />
-                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
-                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
-                <ScalarProperty Name="UserType" ColumnName="UserType" />
-                <ScalarProperty Name="GoogleLocation" ColumnName="GoogleLocation" />
                 <ScalarProperty Name="IMEINo" ColumnName="IMEINo" />
+                <ScalarProperty Name="GoogleLocation" ColumnName="GoogleLocation" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+                <ScalarProperty Name="LoginResult" ColumnName="LoginResult" />
+                <ScalarProperty Name="ReferrerUrl" ColumnName="ReferrerUrl" />
+                <ScalarProperty Name="IPAddress" ColumnName="IPAddress" />
+                <ScalarProperty Name="LoginDevice" ColumnName="LoginDevice" />
+                <ScalarProperty Name="ClientBrowser" ColumnName="ClientBrowser" />
+                <ScalarProperty Name="LoginPassword" ColumnName="LoginPassword" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LoginLogId" ColumnName="LoginLogId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Menus">
             <EntityTypeMapping TypeName="WebaikonErpModel.Menu">
               <MappingFragment StoreEntitySet="Menu">
-                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-                <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
-                <ScalarProperty Name="PageId" ColumnName="PageId" />
-                <ScalarProperty Name="MenuNo" ColumnName="MenuNo" />
-                <ScalarProperty Name="ParentMenuId" ColumnName="ParentMenuId" />
-                <ScalarProperty Name="MenuIcon" ColumnName="MenuIcon" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="MenuIcon" ColumnName="MenuIcon" />
+                <ScalarProperty Name="ParentMenuId" ColumnName="ParentMenuId" />
+                <ScalarProperty Name="MenuNo" ColumnName="MenuNo" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
+                <ScalarProperty Name="MenuTitle" ColumnName="MenuTitle" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pages">
             <EntityTypeMapping TypeName="WebaikonErpModel.Page">
               <MappingFragment StoreEntitySet="Page">
-                <ScalarProperty Name="PageId" ColumnName="PageId" />
-                <ScalarProperty Name="PageGroupId" ColumnName="PageGroupId" />
-                <ScalarProperty Name="PageName" ColumnName="PageName" />
-                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
+                <ScalarProperty Name="PageName" ColumnName="PageName" />
+                <ScalarProperty Name="PageGroupId" ColumnName="PageGroupId" />
+                <ScalarProperty Name="PageId" ColumnName="PageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PageGroups">
             <EntityTypeMapping TypeName="WebaikonErpModel.PageGroup">
               <MappingFragment StoreEntitySet="PageGroup">
-                <ScalarProperty Name="PageGroupId" ColumnName="PageGroupId" />
-                <ScalarProperty Name="PageGroupName" ColumnName="PageGroupName" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PageGroupName" ColumnName="PageGroupName" />
+                <ScalarProperty Name="PageGroupId" ColumnName="PageGroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectTypes">
+            <EntityTypeMapping TypeName="WebaikonErpModel.ProjectType">
+              <MappingFragment StoreEntitySet="ProjectType">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ProjectDescription" ColumnName="ProjectDescription" />
+                <ScalarProperty Name="ProjectTypeName" ColumnName="ProjectTypeName" />
+                <ScalarProperty Name="ProjectTypeId" ColumnName="ProjectTypeId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="WebaikonErpModel.Role">
               <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="RoleTitle" ColumnName="RoleTitle" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="RoleTitle" ColumnName="RoleTitle" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RoleMenus">
             <EntityTypeMapping TypeName="WebaikonErpModel.RoleMenu">
               <MappingFragment StoreEntitySet="RoleMenu">
-                <ScalarProperty Name="RoleMenuId" ColumnName="RoleMenuId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CanEdit" ColumnName="CanEdit" />
-                <ScalarProperty Name="CanDelete" ColumnName="CanDelete" />
                 <ScalarProperty Name="CanCreate" ColumnName="CanCreate" />
+                <ScalarProperty Name="CanDelete" ColumnName="CanDelete" />
+                <ScalarProperty Name="CanEdit" ColumnName="CanEdit" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="RoleMenuId" ColumnName="RoleMenuId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Staffs">
             <EntityTypeMapping TypeName="WebaikonErpModel.Staff">
               <MappingFragment StoreEntitySet="Staff">
-                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
-                <ScalarProperty Name="StaffName" ColumnName="StaffName" />
-                <ScalarProperty Name="StaffCode" ColumnName="StaffCode" />
-                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
-                <ScalarProperty Name="StaffType" ColumnName="StaffType" />
-                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
-                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
-                <ScalarProperty Name="AlternateNo" ColumnName="AlternateNo" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="StaffPhoto" ColumnName="StaffPhoto" />
-                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
-                <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
-                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="JoinDate" ColumnName="JoinDate" />
+                <ScalarProperty Name="FullAddress" ColumnName="FullAddress" />
+                <ScalarProperty Name="Qualification" ColumnName="Qualification" />
+                <ScalarProperty Name="StaffPhoto" ColumnName="StaffPhoto" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="AlternateNo" ColumnName="AlternateNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="StaffType" ColumnName="StaffType" />
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+                <ScalarProperty Name="StaffCode" ColumnName="StaffCode" />
+                <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="StaffLogins">
             <EntityTypeMapping TypeName="WebaikonErpModel.StaffLogin">
               <MappingFragment StoreEntitySet="StaffLogin">
-                <ScalarProperty Name="StaffLoginId" ColumnName="StaffLoginId" />
-                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="LoginPassword" ColumnName="LoginPassword" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="LoginPassword" ColumnName="LoginPassword" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="StaffId" ColumnName="StaffId" />
+                <ScalarProperty Name="StaffLoginId" ColumnName="StaffLoginId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="StaffLoginRoles">
             <EntityTypeMapping TypeName="WebaikonErpModel.StaffLoginRole">
               <MappingFragment StoreEntitySet="StaffLoginRole">
-                <ScalarProperty Name="StaffLoginRoleId" ColumnName="StaffLoginRoleId" />
-                <ScalarProperty Name="StaffLoginId" ColumnName="StaffLoginId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="StaffLoginId" ColumnName="StaffLoginId" />
+                <ScalarProperty Name="StaffLoginRoleId" ColumnName="StaffLoginRoleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="States">
             <EntityTypeMapping TypeName="WebaikonErpModel.State">
               <MappingFragment StoreEntitySet="State">
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="StateName" ColumnName="StateName" />
-                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="StateMasters">
             <EntityTypeMapping TypeName="WebaikonErpModel.StateMaster">
               <MappingFragment StoreEntitySet="StateMaster">
-                <ScalarProperty Name="StateId" ColumnName="StateId" />
-                <ScalarProperty Name="StateName" ColumnName="StateName" />
-                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="UpdatedBy" ColumnName="UpdatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="StateCode" ColumnName="StateCode" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

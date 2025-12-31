@@ -29,15 +29,21 @@ namespace Project
         public virtual DbSet<Backup> Backups { get; set; }
         public virtual DbSet<City> Cities { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<ClientPayment> ClientPayments { get; set; }
+        public virtual DbSet<ClientRenewal> ClientRenewals { get; set; }
         public virtual DbSet<Company> Companies { get; set; }
         public virtual DbSet<Database> Databases { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Designation> Designations { get; set; }
         public virtual DbSet<District> Districts { get; set; }
+        public virtual DbSet<Expense> Expenses { get; set; }
+        public virtual DbSet<ExpenseHead> ExpenseHeads { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
         public virtual DbSet<LoginLog> LoginLogs { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<Page> Pages { get; set; }
         public virtual DbSet<PageGroup> PageGroups { get; set; }
+        public virtual DbSet<ProjectType> ProjectTypes { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<RoleMenu> RoleMenus { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
