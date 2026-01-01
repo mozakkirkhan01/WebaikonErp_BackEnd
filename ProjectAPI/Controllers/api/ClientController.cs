@@ -161,7 +161,7 @@ namespace ProjectAPI.Controllers.api
                 response.Message = ConstantData.SuccessMessage;
             }
             catch (Exception ex)
-            {
+            {                   
                 if (ex.Message.Contains("FK"))
                     response.Message = "This record is in use.so can't delete.";
                 else
