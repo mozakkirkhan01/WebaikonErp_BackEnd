@@ -21,8 +21,8 @@ namespace Project
         public decimal Amount { get; set; }
         public System.DateTime PaymentDate { get; set; }
         public byte PaymentMode { get; set; }
-        public int CreatedBy { get; set; }
-        public System.DateTime CreatedOn { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<System.DateTime> CreatedOn { get; set; }
         public Nullable<int> UpdatedBy { get; set; }
         public Nullable<System.DateTime> UpdatedOn { get; set; }
     

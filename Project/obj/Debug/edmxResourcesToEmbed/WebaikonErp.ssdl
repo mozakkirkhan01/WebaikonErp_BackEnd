@@ -63,8 +63,8 @@
     <Property Name="Amount" Type="money" Nullable="false" />
     <Property Name="PaymentDate" Type="date" Nullable="false" />
     <Property Name="PaymentMode" Type="tinyint" Nullable="false" />
-    <Property Name="CreatedBy" Type="int" Nullable="false" />
-    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedOn" Type="datetime" />
     <Property Name="UpdatedBy" Type="int" />
     <Property Name="UpdatedOn" Type="datetime" />
   </EntityType>
@@ -429,7 +429,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ClientPayment_StaffLogin">
-    <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="1" />
+    <End Role="StaffLogin" Type="Self.StaffLogin" Multiplicity="0..1" />
     <End Role="ClientPayment" Type="Self.ClientPayment" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="StaffLogin">

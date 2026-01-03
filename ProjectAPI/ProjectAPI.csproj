@@ -251,6 +251,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\api\CityController.cs" />
     <Compile Include="Controllers\api\ClientController.cs" />
+    <Compile Include="Controllers\api\ClientPaymentController.cs" />
     <Compile Include="Controllers\api\CompanyController.cs" />
     <Compile Include="Controllers\api\DepartmentController.cs" />
     <Compile Include="Controllers\api\DesignationController.cs" />

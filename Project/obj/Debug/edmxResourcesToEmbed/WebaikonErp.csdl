@@ -263,8 +263,8 @@
     <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="PaymentMode" Type="Byte" Nullable="false" />
-    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
     <Property Name="UpdatedBy" Type="Int32" />
     <Property Name="UpdatedOn" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Client" Relationship="WebaikonErpModel.FK_ClientPayment_Client" FromRole="ClientPayment" ToRole="Client" />
@@ -715,7 +715,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ClientPayment_StaffLogin">
-    <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="1" />
+    <End Type="WebaikonErpModel.StaffLogin" Role="StaffLogin" Multiplicity="0..1" />
     <End Type="WebaikonErpModel.ClientPayment" Role="ClientPayment" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="StaffLogin">

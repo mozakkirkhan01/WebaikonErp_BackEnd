@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace ProjectAPI.Controllers.api
 {
-        [RoutePrefix("api/Project")]
+    [RoutePrefix("api/Project")]
     public class ProjectTypeController : ApiController
     {
 
