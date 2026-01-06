@@ -39,6 +39,7 @@ namespace ProjectAPI.Controllers.api
                                 d1.Email,
                                 d1.GSTNo,
                                 d1.ClientFullAddress,
+                                d1.StateId,
                                 d1.State.StateName,
                                 d1.StateCode,
                                 d1.Status,

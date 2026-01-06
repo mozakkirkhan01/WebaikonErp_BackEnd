@@ -364,7 +364,7 @@
     <Property Name="ExpenseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="ExpenseHeadId" Type="Int32" Nullable="false" />
     <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="7" />
     <Property Name="PaymentMode" Type="Byte" Nullable="false" />
     <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
     <Property Name="CreatedBy" Type="Int32" Nullable="false" />

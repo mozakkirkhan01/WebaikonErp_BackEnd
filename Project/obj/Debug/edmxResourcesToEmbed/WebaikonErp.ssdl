@@ -150,7 +150,7 @@
     <Property Name="ExpenseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ExpenseHeadId" Type="int" Nullable="false" />
     <Property Name="Description" Type="nvarchar" MaxLength="500" />
-    <Property Name="ExpenseDate" Type="date" Nullable="false" />
+    <Property Name="ExpenseDate" Type="datetime2" Precision="7" Nullable="false" />
     <Property Name="PaymentMode" Type="tinyint" Nullable="false" />
     <Property Name="Amount" Type="money" Nullable="false" />
     <Property Name="CreatedBy" Type="int" Nullable="false" />

@@ -252,10 +252,13 @@
     <Compile Include="Controllers\api\CityController.cs" />
     <Compile Include="Controllers\api\ClientController.cs" />
     <Compile Include="Controllers\api\ClientPaymentController.cs" />
+    <Compile Include="Controllers\api\ClientRenewalController.cs" />
     <Compile Include="Controllers\api\CompanyController.cs" />
     <Compile Include="Controllers\api\DepartmentController.cs" />
     <Compile Include="Controllers\api\DesignationController.cs" />
     <Compile Include="Controllers\api\DistrictController.cs" />
+    <Compile Include="Controllers\api\ExpenseController.cs" />
+    <Compile Include="Controllers\api\ExpenseHeadController.cs" />
     <Compile Include="Controllers\api\MenuController.cs" />
     <Compile Include="Controllers\api\PageController.cs" />
     <Compile Include="Controllers\api\PageGroupController.cs" />

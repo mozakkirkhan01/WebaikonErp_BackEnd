@@ -155,7 +155,7 @@
           <Property Name="ExpenseId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ExpenseHeadId" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
-          <Property Name="ExpenseDate" Type="date" Nullable="false" />
+          <Property Name="ExpenseDate" Type="datetime2" Precision="7" Nullable="false" />
           <Property Name="PaymentMode" Type="tinyint" Nullable="false" />
           <Property Name="Amount" Type="money" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
@@ -1393,7 +1393,7 @@
           <Property Name="ExpenseId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ExpenseHeadId" Type="Int32" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExpenseDate" Type="DateTime" Nullable="false" Precision="7" />
           <Property Name="PaymentMode" Type="Byte" Nullable="false" />
           <Property Name="Amount" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />

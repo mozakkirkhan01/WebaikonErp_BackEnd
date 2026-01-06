@@ -8,12 +8,12 @@ using System.Web.Http;
 
 namespace ProjectAPI.Controllers.api
 {
-    [RoutePrefix("api/ClientPayment")]
-    public class ClientPaymentPaymentController : ApiController
+    [RoutePrefix("api/ClientRenewal")]
+    public class ClientRenewalController : ApiController
     {
         [HttpPost]
-        [Route("ClientPaymentList")]
-        public ExpandoObject ClientPaymentList(RequestModel requestModel)
+        [Route("ClientRenewalList")]
+        public ExpandoObject ClientRenewalList(RequestModel requestModel)
         {
             dynamic response = new ExpandoObject();
             try
@@ -22,29 +22,29 @@ namespace ProjectAPI.Controllers.api
                 string AppKey = HttpContext.Current.Request.Headers["AppKey"];
                 AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
                 var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
-                ClientPayment model = JsonConvert.DeserializeObject<ClientPayment>(decryptData);
+                ClientRenewal model = JsonConvert.DeserializeObject<ClientRenewal>(decryptData);
 
-                var list = (from d1 in dbContext.ClientPayments
-                            where (model.ClientPaymentId == d1.ClientPaymentId || model.ClientPaymentId == 0)
-                            orderby d1.ClientPaymentId
+                var list = (from d1 in dbContext.ClientRenewals
+                            where (model.ClientRenewalId == d1.ClientRenewalId || model.ClientRenewalId == 0)
                             select new
                             {
+                                d1.ClientRenewalId,
                                 d1.ClientId,
-                                d1.ClientPaymentId,
                                 d1.Client.ClientCompanyName,
                                 d1.ProjectTypeId,
                                 d1.ProjectType.ProjectTypeName,
+                                d1.ProjectName,
                                 d1.Description,
-                                d1.Amount,
-                                d1.PaymentDate,
-                                d1.PaymentMode,
+                                d1.RenewalDate,
+                                d1.RenewalAmount,
+                                d1.RenewalStatus,
                                 d1.CreatedBy,
                                 d1.CreatedOn,
                                 d1.UpdatedBy,
                                 d1.UpdatedOn,
                             }).ToList();
 
-                response.ClientPaymentList = list;
+                response.ClientRenewalList = list;
                 response.Message = ConstantData.SuccessMessage;
             }
             catch (Exception ex)
@@ -55,8 +55,8 @@ namespace ProjectAPI.Controllers.api
         }
 
         [HttpPost]
-        [Route("saveClientPayment")]
-        public ExpandoObject SaveClientPayment(RequestModel requestModel)
+        [Route("saveClientRenewal")]
+        public ExpandoObject SaveClientRenewal(RequestModel requestModel)
         {
             dynamic response = new ExpandoObject();
             try
@@ -65,64 +65,60 @@ namespace ProjectAPI.Controllers.api
                 string AppKey = HttpContext.Current.Request.Headers["AppKey"];
                 AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
                 var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
-                ClientPayment model = JsonConvert.DeserializeObject<ClientPayment>(decryptData);
+                ClientRenewal model = JsonConvert.DeserializeObject<ClientRenewal>(decryptData);
 
-                ClientPayment ClientPayment;
+                ClientRenewal ClientRenewal;
 
                 // ================= UPDATE =================
-                if (model.ClientPaymentId > 0)
+                if (model.ClientRenewalId > 0)
                 {
-                    ClientPayment = dbContext.ClientPayments
-                                      .FirstOrDefault(x => x.ClientPaymentId == model.ClientPaymentId);
+                    ClientRenewal = dbContext.ClientRenewals.FirstOrDefault(x => x.ClientRenewalId == model.ClientRenewalId);
 
-                    if (ClientPayment == null)
+                    if (ClientRenewal == null)
                     {
-                        response.Message = "ClientPayment not found";
+                        response.Message = "ClientRenewal not found";
                         return response;
                     }
 
-                    ClientPayment.ClientId = model.ClientId;
-                    ClientPayment.ProjectTypeId = model.ProjectTypeId;
-                    ClientPayment.Description = model.Description;
-                    ClientPayment.Amount = model.Amount;
-                    ClientPayment.PaymentDate = model.PaymentDate;
-                    ClientPayment.PaymentMode = model.PaymentMode;
-
-                    ClientPayment.UpdatedBy = model.CreatedBy;
-                    ClientPayment.UpdatedOn = DateTime.Now;
+                    ClientRenewal.ClientRenewalId = model.ClientRenewalId;
+                    ClientRenewal.ClientId = model.ClientId;
+                    ClientRenewal.ProjectTypeId = model.ProjectTypeId;
+                    ClientRenewal.ProjectName = model.ProjectName;
+                    ClientRenewal.Description = model.Description;
+                    ClientRenewal.RenewalDate = model.RenewalDate;
+                    ClientRenewal.RenewalAmount = model.RenewalAmount;
+                    ClientRenewal.RenewalStatus = model.RenewalStatus;
+                    ClientRenewal.UpdatedBy = model.CreatedBy; // logged-in staff
+                    ClientRenewal.UpdatedOn = DateTime.Now;
                 }
                 // ================= INSERT =================
                 else
                 {
-                    ClientPayment = model;
-                    ClientPayment.CreatedOn = DateTime.Now;
-                    //ClientPayment = new ClientPayment
-                    //{
-                    //    ClientId = model.ClientId,
-                    //    ProjectTypeId = model.ProjectTypeId,
-                    //    Description = model.Description,
-                    //    Amount = model.Amount,
-                    //    PaymentDate = model.PaymentDate,
-                    //    PaymentMode = model.PaymentMode,
+                    ClientRenewal = model;
+                    if (ClientRenewal.ClientRenewalId == 0)
+                    {
+                        ClientRenewal.CreatedOn = DateTime.Now;
 
-                    //    CreatedBy = 1,
-                    //    CreatedOn = DateTime.Now
-                    //};
+                        ClientRenewal.UpdatedBy = null;
+                        ClientRenewal.UpdatedOn = null;
 
+                        dbContext.ClientRenewals.Add(ClientRenewal);
+
+                    }
                 }
-                if (ClientPayment.ClientPaymentId == 0)
-                {
-                    dbContext.ClientPayments.Add(ClientPayment);
-                }
-                    dbContext.SaveChanges();
-                    response.Message = ConstantData.SuccessMessage;
+                dbContext.SaveChanges();
+                response.Message = ConstantData.SuccessMessage;
+
+
+
+                //response.ClientRenewalId = ClientRenewal.ClientRenewalId;
 
             }
             catch (Exception ex)
             {
                 if (ex.InnerException != null && ex.InnerException.Message.Contains("IX"))
                 {
-                    response.Message = "This ClientPayment already exists";
+                    response.Message = "This ClientRenewal already exists";
                 }
                 else
                 {
@@ -134,8 +130,8 @@ namespace ProjectAPI.Controllers.api
         }
 
         [HttpPost]
-        [Route("deleteClientPayment")]
-        public ExpandoObject DeleteClientPayment(RequestModel requestModel)
+        [Route("deleteClientRenewal")]
+        public ExpandoObject DeleteClientRenewal(RequestModel requestModel)
         {
             dynamic response = new ExpandoObject();
             try
@@ -144,10 +140,10 @@ namespace ProjectAPI.Controllers.api
                 string AppKey = HttpContext.Current.Request.Headers["AppKey"];
                 AppData.CheckAppKey(dbContext, AppKey, (byte)KeyFor.Admin);
                 var decryptData = CryptoJs.Decrypt(requestModel.request, CryptoJs.key, CryptoJs.iv);
-                ClientPayment model = JsonConvert.DeserializeObject<ClientPayment>(decryptData);
+                ClientRenewal model = JsonConvert.DeserializeObject<ClientRenewal>(decryptData);
 
-                var ClientPayment = dbContext.ClientPayments.Where(x => x.ClientPaymentId == model.ClientPaymentId).First();
-                dbContext.ClientPayments.Remove(ClientPayment);
+                var ClientRenewal = dbContext.ClientRenewals.Where(x => x.ClientRenewalId == model.ClientRenewalId).First();
+                dbContext.ClientRenewals.Remove(ClientRenewal);
                 dbContext.SaveChanges();
                 response.Message = ConstantData.SuccessMessage;
             }
